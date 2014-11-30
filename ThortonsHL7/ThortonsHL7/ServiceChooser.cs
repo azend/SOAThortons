@@ -26,7 +26,18 @@ namespace ThortonsHL7
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SocketClient.StartClient();
+            // Register team?
+            //SocketClient.StartClient();
+            
+            // Check response for OK/FAIL
+            // If OK, allow user to select service option
+            buttonPurchaseTotaller.Enabled = true;
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+
+            this.Close();
         }
     }
 }

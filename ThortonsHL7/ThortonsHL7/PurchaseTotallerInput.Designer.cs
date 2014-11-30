@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.buttonExecute = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonBack = new System.Windows.Forms.Button();
             this.comboBoxProvince = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxPurchaseSubtotal = new System.Windows.Forms.TextBox();
@@ -57,14 +57,15 @@
             this.buttonExecute.UseVisualStyleBackColor = true;
             this.buttonExecute.Click += new System.EventHandler(this.buttonExecute_Click);
             // 
-            // button2
+            // buttonBack
             // 
-            this.button2.Location = new System.Drawing.Point(63, 203);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Back";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonBack.Location = new System.Drawing.Point(63, 203);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(75, 23);
+            this.buttonBack.TabIndex = 3;
+            this.buttonBack.Text = "Back";
+            this.buttonBack.UseVisualStyleBackColor = true;
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
             // comboBoxProvince
             // 
@@ -73,6 +74,7 @@
             this.comboBoxProvince.Name = "comboBoxProvince";
             this.comboBoxProvince.Size = new System.Drawing.Size(156, 21);
             this.comboBoxProvince.TabIndex = 4;
+            this.comboBoxProvince.Text = "Select province";
             // 
             // label2
             // 
@@ -89,6 +91,8 @@
             this.textBoxPurchaseSubtotal.Name = "textBoxPurchaseSubtotal";
             this.textBoxPurchaseSubtotal.Size = new System.Drawing.Size(156, 20);
             this.textBoxPurchaseSubtotal.TabIndex = 6;
+            this.textBoxPurchaseSubtotal.Text = "Enter value";
+            this.textBoxPurchaseSubtotal.Enter += new System.EventHandler(this.textBoxPurchaseSubtotal_Enter);
             // 
             // label3
             // 
@@ -108,7 +112,7 @@
             this.Controls.Add(this.textBoxPurchaseSubtotal);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxProvince);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonExecute);
             this.Controls.Add(this.label1);
             this.Name = "PurchaseTotallerInput";
@@ -122,7 +126,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonExecute;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonBack;
         private System.Windows.Forms.ComboBox comboBoxProvince;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxPurchaseSubtotal;

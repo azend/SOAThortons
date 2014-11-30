@@ -7,7 +7,8 @@ using System.Text;
 
 public class SocketClient
 {
-    public static void StartClient() {
+    public static void StartClient() 
+    {
         // Data buffer for incoming data.
         byte[] bytes = new byte[1024];
 

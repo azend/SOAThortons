@@ -12,7 +12,6 @@ namespace Server
 {
     class Program
     {
-
         // Incoming data from the client.
         public static string data = null;
 

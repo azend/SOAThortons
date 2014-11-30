@@ -30,7 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.buttonPurchaseTotaller = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonRegisterTeam = new System.Windows.Forms.Button();
+            this.buttonExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -45,7 +46,8 @@
             // 
             // buttonPurchaseTotaller
             // 
-            this.buttonPurchaseTotaller.Location = new System.Drawing.Point(82, 93);
+            this.buttonPurchaseTotaller.Enabled = false;
+            this.buttonPurchaseTotaller.Location = new System.Drawing.Point(82, 100);
             this.buttonPurchaseTotaller.Name = "buttonPurchaseTotaller";
             this.buttonPurchaseTotaller.Size = new System.Drawing.Size(108, 59);
             this.buttonPurchaseTotaller.TabIndex = 1;
@@ -53,26 +55,37 @@
             this.buttonPurchaseTotaller.UseVisualStyleBackColor = true;
             this.buttonPurchaseTotaller.Click += new System.EventHandler(this.buttonPurchaseTotaller_Click);
             // 
-            // button1
+            // buttonRegisterTeam
             // 
-            this.button1.Location = new System.Drawing.Point(82, 58);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonRegisterTeam.Location = new System.Drawing.Point(82, 58);
+            this.buttonRegisterTeam.Name = "buttonRegisterTeam";
+            this.buttonRegisterTeam.Size = new System.Drawing.Size(108, 29);
+            this.buttonRegisterTeam.TabIndex = 2;
+            this.buttonRegisterTeam.Text = "Register Team?";
+            this.buttonRegisterTeam.UseVisualStyleBackColor = true;
+            this.buttonRegisterTeam.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonExit
+            // 
+            this.buttonExit.Location = new System.Drawing.Point(82, 173);
+            this.buttonExit.Name = "buttonExit";
+            this.buttonExit.Size = new System.Drawing.Size(108, 24);
+            this.buttonExit.TabIndex = 3;
+            this.buttonExit.Text = "Exit";
+            this.buttonExit.UseVisualStyleBackColor = true;
+            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
             // ServiceChooser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(279, 209);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonExit);
+            this.Controls.Add(this.buttonRegisterTeam);
             this.Controls.Add(this.buttonPurchaseTotaller);
             this.Controls.Add(this.label1);
             this.Name = "ServiceChooser";
-            this.Text = "Form1";
+            this.Text = "ServiceChooser";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -82,7 +95,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonPurchaseTotaller;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonRegisterTeam;
+        private System.Windows.Forms.Button buttonExit;
 
     }
 }

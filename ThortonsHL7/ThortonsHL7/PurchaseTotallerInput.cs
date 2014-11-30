@@ -16,7 +16,6 @@ namespace ThortonsHL7
         public PurchaseTotallerInput()
         {
             InitializeComponent();
-
             comboBoxProvince.DataSource = Regions.GetNames();
         }
 
@@ -28,18 +27,24 @@ namespace ThortonsHL7
         private void Execute()
         {
 
-            if (Validate())
+            if (ValidateData())
             {
                 float purchaseSubtotal = float.Parse(textBoxPurchaseSubtotal.Text);
                 string province = (string)comboBoxProvince.SelectedValue;
 
                 // Async task or something
                 MessageBox.Show("Sending purchase subtotal to be totalled by purchase totaller");
+                this.Close();
+                // parse data and send to result screen
+                // new PurchaseTotallerResults(float subTotal, float PST, float GST, float HST, float total).Show();
+                new PurchaseTotallerResults().Show();
             }
+
+
             
         }
 
-        private bool Validate()
+        private bool ValidateData()
         {
             bool valid = true;
 
@@ -60,6 +65,19 @@ namespace ThortonsHL7
             }
 
             return valid;
+        }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void textBoxPurchaseSubtotal_Enter(object sender, EventArgs e)
+        {
+            if (textBoxPurchaseSubtotal.Text == "Enter value")
+            {
+                textBoxPurchaseSubtotal.Clear();
+            }
         }
 
     }

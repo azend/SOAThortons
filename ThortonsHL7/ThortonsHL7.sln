@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "ThortonsHL7\Client.csproj", "{A3790A8C-E79B-446C-AC96-DB15DA8D9A32}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{C733EDC8-ECBB-4772-8F27-97E18C21FA2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{F8CA64EB-E03E-4877-A558-D51258135793}"
 EndProject
@@ -19,10 +17,6 @@ Global
 		{A3790A8C-E79B-446C-AC96-DB15DA8D9A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3790A8C-E79B-446C-AC96-DB15DA8D9A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3790A8C-E79B-446C-AC96-DB15DA8D9A32}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C733EDC8-ECBB-4772-8F27-97E18C21FA2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C733EDC8-ECBB-4772-8F27-97E18C21FA2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C733EDC8-ECBB-4772-8F27-97E18C21FA2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C733EDC8-ECBB-4772-8F27-97E18C21FA2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F8CA64EB-E03E-4877-A558-D51258135793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8CA64EB-E03E-4877-A558-D51258135793}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8CA64EB-E03E-4877-A558-D51258135793}.Release|Any CPU.ActiveCfg = Release|Any CPU
