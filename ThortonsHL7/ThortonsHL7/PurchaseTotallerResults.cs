@@ -21,19 +21,16 @@ namespace ThortonsHL7
         {
             InitializeComponent();
             
-            // Wow
             // Display information
             subtotalTextbox.Text = subTotal.ToString();
             pstTextbox.Text = PST.ToString();
             gstTextbox.Text = GST.ToString();
             hstTextbox.Text = HST.ToString();
             totalTextbox.Text = total.ToString();
-            // Such code
         }
 
         private void backButton_Click(object sender, EventArgs e)
         {
-            // Very productivity
             this.Close();
         }
     }

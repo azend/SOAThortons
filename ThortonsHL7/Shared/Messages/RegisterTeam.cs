@@ -9,7 +9,7 @@ namespace Shared.Messages
 {
     public class RegisterTeam : IMessage
     {
-        private static string teamName;
+        private static string teamID;
         private static string expiry;
         private static bool success;
         private static int errorCode;
@@ -20,7 +20,7 @@ namespace Shared.Messages
             return String.Format(BOM + "DRC|REG-TEAM|||" + EOS + "INF|{0}|" + EOS + EOM + EOS, teamName);
         }
 
-        public static void ParseMessage(string message)
+        public static bool ParseMessage(string message)
         {
  
 
@@ -41,13 +41,15 @@ namespace Shared.Messages
             }
             else
             {
+                errorCode = "0";
+                errorMsg = "";
                 throw new ArgumentException();
             }
         }
 
         public static string GetTeamName()
         {
-            return teamName;
+            return teamID;
         }
 
         public static string GetExpiry()
