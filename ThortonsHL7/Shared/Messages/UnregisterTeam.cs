@@ -21,7 +21,7 @@ namespace Shared.Messages
         public static bool ParseMessage(string message)
         {
             Match pass = Regex.Match(message, "SOA[|]OK[|](.*)[|](.*)[|][|]");
-            Match fail = Regex.Match(message, "FAIL: SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
+            Match fail = Regex.Match(message, "SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
 
             if (pass.Success)
             {

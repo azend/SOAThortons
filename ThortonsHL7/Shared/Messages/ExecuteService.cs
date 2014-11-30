@@ -33,7 +33,7 @@ namespace Shared.Messages
             int x = 0;
 
             Match pass = Regex.Match(message, "SOA[|]OK[|](.*)[|](.*)[|][|]");
-            Match fail = Regex.Match(message, "FAIL: SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
+            Match fail = Regex.Match(message, "SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
             MatchCollection rsps = Regex.Matches(message, "RSP|(.*)|(.*)|(.*)|(.*)|");
 
             if (pass.Success)
