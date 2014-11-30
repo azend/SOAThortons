@@ -9,7 +9,7 @@ namespace Shared.Messages
 {
     class QueryService: IMessage
     {
-        private static bool success;
+        private static bool success = false;
         private static string serverName;
         private static string numArgs;
         private static string serverIP;
@@ -27,7 +27,7 @@ namespace Shared.Messages
             return String.Format(BOM + "DRC|QUERY_SERVICE|{0}|{1}|" + EOS + "SRV|{3}||||||" + EOS + EOM + EOS, teamName);
         }
 
-        public static void ParseMessage(string message)
+        public static bool ParseMessage(string message)
         {
             int x = 0;
             int y = 0;
@@ -94,6 +94,7 @@ namespace Shared.Messages
             {
                 throw new ArgumentException();
             }
+            return success;
         }
 
         public string GetServerName()
@@ -154,11 +155,6 @@ namespace Shared.Messages
         public string GetErrorMessage()
         {
             return errorMessage;
-        }
-
-        public bool ResponseSuccess()
-        {
-            return success;
         }
     }
 }

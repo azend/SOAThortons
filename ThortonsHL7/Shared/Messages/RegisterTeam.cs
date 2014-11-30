@@ -11,7 +11,7 @@ namespace Shared.Messages
     {
         private static string teamID;
         private static string expiry;
-        private static bool success;
+        private static bool success = false;
         private static int errorCode;
         private static string errorMessage;
 
@@ -22,15 +22,13 @@ namespace Shared.Messages
 
         public static bool ParseMessage(string message)
         {
- 
-
             Match pass = Regex.Match(message, "SOA[|]OK[|](.*)[|](.*)[|][|]");
             Match fail = Regex.Match(message, "FAIL: SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
           
             if (pass.Success)
             {
                 success = true;
-                teamName = pass.Groups[1].Value;
+                teamID = pass.Groups[1].Value;
                 expiry = pass.Groups[2].Value;
             }
             else if (fail.Success)
@@ -41,10 +39,9 @@ namespace Shared.Messages
             }
             else
             {
-                errorCode = "0";
-                errorMsg = "";
                 throw new ArgumentException();
             }
+            return success;
         }
 
         public static string GetTeamName()
@@ -65,11 +62,6 @@ namespace Shared.Messages
         public string GetErrorMessage()
         {
             return errorMessage;
-        }
-
-        public bool ResponseSuccess()
-        {
-            return success;
         }
     }
 }

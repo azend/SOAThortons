@@ -9,7 +9,7 @@ namespace Shared.Messages
 {
     public class UnregisterTeam : IMessage
     {
-        private static bool success;
+        private static bool success = false;
         private static int errorCode;
         private static string errorMessage;
 
@@ -18,7 +18,7 @@ namespace Shared.Messages
             return String.Format(BOM + "DRC|UNREG-TEAM|{0}|{1}|" + EOS + EOM + EOS, teamName, teamID);
         }
 
-        public static void ParseMessage(string message)
+        public static bool ParseMessage(string message)
         {
             Match pass = Regex.Match(message, "SOA[|]OK[|](.*)[|](.*)[|][|]");
             Match fail = Regex.Match(message, "FAIL: SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
@@ -36,6 +36,7 @@ namespace Shared.Messages
             {
                 throw new ArgumentException();
             }
+            return success;
         }
 
         public int GetErrorCode()
@@ -46,11 +47,6 @@ namespace Shared.Messages
         public string GetErrorMessage()
         {
             return errorMessage;
-        }
-
-        public bool ResponseSuccess()
-        {
-            return success;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Shared.Messages
 {
     class ExecuteService : IMessage
     {
-        private static bool success;
+        private static bool success = false;
         private static string errorMessage;
         private static int errorCode;
         private static string[] respPosition;
@@ -28,7 +28,7 @@ namespace Shared.Messages
             return String.Format(BOM + "DRC|EXEC_SERVICE|{0}|{1}|" + EOS + "SRV||{2}||{3}|||" + EOS + "{4}" + EOM + EOS, teamName, teamID, serviceName, numArgs, args);
         }
 
-        public static void ParseMessage(string message)
+        public static bool ParseMessage(string message)
         {
             int x = 0;
 
@@ -62,6 +62,7 @@ namespace Shared.Messages
             {
                 throw new ArgumentException();
             }
+            return success;
         }
 
         public string[] GetRSPPosition()
@@ -91,11 +92,6 @@ namespace Shared.Messages
         public string GetErrorMessage()
         {
             return errorMessage;
-        }
-
-        public bool ResponseSuccess()
-        {
-            return success;
         }
     }
 }
