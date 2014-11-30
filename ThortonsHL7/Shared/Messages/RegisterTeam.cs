@@ -44,7 +44,7 @@ namespace Shared.Messages
             return success;
         }
 
-        public static string GetTeamName()
+        public static string GetTeamID()
         {
             return teamID;
         }
