@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace ThortonService.Services
 {
-    public abstract class AbstractService
+    public abstract class AbstractService : ServiceInterface
     {
+        
+        public abstract String serviceName
+        {
+            get;
+        }
+
+
+
       /*  protected StateObject state = null;
         protected List<string> parameters = new List<string>();
         protected Regex searchRegex = null;
