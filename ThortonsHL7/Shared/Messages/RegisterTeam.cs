@@ -54,12 +54,12 @@ namespace Shared.Messages
             return expiry;
         }
 
-        public int GetErrorCode()
+        public static int GetErrorCode()
         {
             return errorCode;
         }
 
-        public string GetErrorMessage()
+        public static string GetErrorMessage()
         {
             return errorMessage;
         }

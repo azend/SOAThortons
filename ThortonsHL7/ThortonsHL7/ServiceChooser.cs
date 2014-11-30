@@ -38,7 +38,7 @@ namespace ThortonsHL7
             // Check response for OK/FAIL
             if (!registerResponse)
             {
-                MessageBox.Show("Error registering team: [" + RegisterTeam.GetErrorCode() + "] " + RegisterTeam.GetErrorMsg());
+                MessageBox.Show("Error registering team: [" + RegisterTeam.GetErrorCode() + "] " + RegisterTeam.GetErrorMessage());
             }
             else
             {
