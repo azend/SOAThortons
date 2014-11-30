@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Shared;
+using Shared.Messages;
 
 namespace ThortonsHL7
 {
@@ -26,17 +27,27 @@ namespace ThortonsHL7
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Register team?
-            //SocketClient.StartClient();
-            
+            // Attempt to register team (needs testing)
+            string registerTeamStr = RegisterTeam.GenerateMessage(textBoxTeamName.Text);
+            string response = SocketClient.RegisterTeam(registerTeamStr);
+            bool registerResponse = false;
+            try {
+                registerResponse = RegisterTeam.ParseMessage(response);
+            } catch { }
+
             // Check response for OK/FAIL
-            // If OK, allow user to select service option
-            buttonPurchaseTotaller.Enabled = true;
+            if (!registerResponse)
+            {
+                MessageBox.Show("Error registering team: [" + RegisterTeam.GetErrorCode() + "] " + RegisterTeam.GetErrorMsg());
+            }
+            else
+            {
+                buttonPurchaseTotaller.Enabled = true;
+            }
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-
             this.Close();
         }
     }

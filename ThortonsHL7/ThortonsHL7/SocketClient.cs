@@ -7,10 +7,11 @@ using System.Text;
 
 public class SocketClient
 {
-    public static void StartClient() 
+    public static string RegisterTeam(string registerStr) 
     {
         // Data buffer for incoming data.
         byte[] bytes = new byte[1024];
+        string response = "";
 
         // Connect to a remote device.
         try {
@@ -32,20 +33,18 @@ public class SocketClient
                     sender.RemoteEndPoint.ToString());
 
                 // Encode the data string into a byte array.
-                byte[] msg = Encoding.ASCII.GetBytes(RegisterTeam.GenerateMessage("TeamFreelancer"));
+                byte[] msg = Encoding.ASCII.GetBytes(registerStr);
 
                 // Send the data through the socket.
                 int bytesSent = sender.Send(msg);
 
                 // Receive the response from the remote device.
                 int bytesRec = sender.Receive(bytes);
-                Console.WriteLine("Echoed test = {0}",
-                Encoding.ASCII.GetString(bytes,0,bytesRec));
+                response = Encoding.ASCII.GetString(bytes,0,bytesRec);
 
                 // Release the socket.
                 sender.Shutdown(SocketShutdown.Both);
-                sender.Close();
-                
+                sender.Close();               
             } catch (ArgumentNullException ane) {
                 Console.WriteLine("ArgumentNullException : {0}",ane.ToString());
             } catch (SocketException se) {
@@ -57,6 +56,7 @@ public class SocketClient
         } catch (Exception e) {
             Console.WriteLine( e.ToString());
         }
+        return response;
     }
 
 }
