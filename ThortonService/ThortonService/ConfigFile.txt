@@ -1,0 +1,13 @@
+﻿//ConfigFile
+//General Configs
+teamName|freelancer
+
+
+//Listener Config
+serviceIP|192.168.0.120
+servicePort|3000
+
+
+//SOA-Registry
+registryIP|192.168.0.120
+registryPort|3218
