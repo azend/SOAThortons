@@ -9,5 +9,7 @@ namespace ThortonService.Services
     interface ServiceInterface
     {
         string serviceName{get;}
+
+        public abstract string Process(string command);
     }
 }
