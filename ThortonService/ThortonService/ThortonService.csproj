@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigHandler.cs" />
+    <Compile Include="IO\HL7Server.cs" />
+    <Compile Include="IO\HL7SpecialChars.cs" />
     <Compile Include="IO\RegistryIO.cs" />
     <Compile Include="MessagingHandler.cs" />
     <Compile Include="Program.cs" />
