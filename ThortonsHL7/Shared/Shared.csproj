@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
+    <Compile Include="Messages\ExecuteService.cs" />
     <Compile Include="Messages\IMessage.cs" />
     <Compile Include="Messages\QueryService.cs" />
     <Compile Include="Messages\UnregisterTeam.cs" />
