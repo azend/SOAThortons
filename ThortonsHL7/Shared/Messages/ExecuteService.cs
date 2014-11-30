@@ -65,31 +65,31 @@ namespace Shared.Messages
             return success;
         }
 
-        public string[] GetRSPPosition()
+        public static string[] GetRSPPosition()
         {
             return respPosition;
         }
 
-        public string[] GetRSPName()
+        public static string[] GetRSPName()
         {
             return respName;
         }
 
-        public string[] GetRSPDataType()
+        public static string[] GetRSPDataType()
         {
             return respDataType;
         }
 
-        public string[] GetRSPValue()
+        public static string[] GetRSPValue()
         {
             return respValue;
         }
-        public int GetErrorCode()
+        public static int GetErrorCode()
         {
             return errorCode;
         }
 
-        public string GetErrorMessage()
+        public static string GetErrorMessage()
         {
             return errorMessage;
         }
