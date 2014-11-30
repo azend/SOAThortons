@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Logger.cs" />
     <Compile Include="Messages\IMessage.cs" />
+    <Compile Include="Messages\QueryService.cs" />
     <Compile Include="Messages\UnregisterTeam.cs" />
     <Compile Include="Messages\RegisterTeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

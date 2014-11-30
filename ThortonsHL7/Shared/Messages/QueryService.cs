@@ -7,25 +7,28 @@ using System.Threading.Tasks;
 
 namespace Shared.Messages
 {
-    public class UnregisterTeam : IMessage
+    class QueryService: IMessage
     {
-        public static string GenerateMessage(string teamName, int teamID)
+         public static string GenerateMessage(string teamName)
         {
-            return String.Format(BOM + "DRC|UNREG-TEAM|{0}|{1}|" + EOS + EOM + EOS, teamName, teamID);
+            return String.Format(BOM + "DRC|QUERY_SERVICE|{0}|{1}|" + EOS + "SRV|{3}||||||" + EOS + EOM + EOS, teamName);
         }
 
-        public static void ParseMessage(string message)
+        public static string ParseMessage(string message)
         {
+            string teamName = string.Empty;
             Match m = Regex.Match(message, "SOA[|]OK[|]");
 
             if (m.Success)
             {
-                // Do nothing client was successfully un-registered
+                teamName = m.Groups[1].Value;
             }
             else
             {
                 throw new ArgumentException();
             }
+
+            return teamName;
         }
     }
 }
