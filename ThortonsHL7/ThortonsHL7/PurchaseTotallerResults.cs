@@ -12,22 +12,27 @@ namespace ThortonsHL7
 {
     public partial class PurchaseTotallerResults : Form
     {
-        public PurchaseTotallerResults(Dictionary<string, string> serviceInfo)
+        public PurchaseTotallerResults()
         {
             InitializeComponent();
-            
+
+            string[] buffer = new string[Convert.ToInt32(Shared.Messages.QueryService.GetNumArgs())];
+
+            for (int x = 0; x < Convert.ToInt32(Shared.Messages.QueryService.GetNumArgs()); x++)
+            {
+                buffer[x] = Shared.Messages.ExecuteService.GetRSPValue()[x];
+            }
+            DisplayResults(buffer);
         }
 
-        public void DisplayResults(float subTotal, float PST, float GST, float HST, float total)
-        {
-            InitializeComponent();
-            
+        public void DisplayResults(string[] results)
+        {         
             // Display information
-            subtotalTextbox.Text = subTotal.ToString();
-            pstTextbox.Text = PST.ToString();
-            gstTextbox.Text = GST.ToString();
-            hstTextbox.Text = HST.ToString();
-            totalTextbox.Text = total.ToString();
+            subtotalTextbox.Text = results[0];
+            pstTextbox.Text = results[1];
+            gstTextbox.Text = results[2];
+            hstTextbox.Text = results[3];
+            totalTextbox.Text = results[4];
         }
 
         private void backButton_Click(object sender, EventArgs e)

@@ -32,16 +32,24 @@ namespace Shared.Messages
         {
             int x = 0;
 
-            Match pass = Regex.Match(message, "PUB[|]OK[|][|][|](.*?)[|]");
+            Match pass = Regex.Match(message, "PUB[|]OK[|][|][|](.*)[|]");
             Match fail = Regex.Match(message, "PUB[|]NOT-OK[|](.*?)[|](.*?)[|]");
             MatchCollection rsps = Regex.Matches(message, "RSP[|](.*?)[|](.*?)[|](.*?)[|](.*?)[|]");
 
             if (pass.Success)
             {
-                respPosition = new string[rsps.Count];
-                respName = new string[rsps.Count];
-                respDataType = new string[rsps.Count];
-                respValue = new string[rsps.Count];
+                try
+                {
+                    respPosition = new string[rsps.Count];
+                    respName = new string[rsps.Count];
+                    respDataType = new string[rsps.Count];
+                    respValue = new string[rsps.Count];
+                }
+                catch(Exception)
+                {
+                    success = false;
+                    return success;
+                }
 
                 foreach(Match rsp in rsps)
                 {

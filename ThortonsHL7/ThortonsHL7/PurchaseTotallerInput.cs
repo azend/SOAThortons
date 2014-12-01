@@ -35,7 +35,7 @@ namespace ThortonsHL7
                 MessageBox.Show("Sending purchase subtotal to be totalled by purchase totaller");
                 Dictionary<string, string> serviceInfo = Comms.ExecuteService();
                 this.Close();
-                new PurchaseTotallerResults(serviceInfo).Show();
+                new PurchaseTotallerResults().Show();
                 //Logger.Log("Sending query service message: " + executeString);
                 // Logger.Log("Recieved response: " + response);
                 //if (!executeResponse)
