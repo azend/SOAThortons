@@ -82,7 +82,7 @@ namespace ThortonService.Services
         {
             ServiceData myServiceData = new ServiceData();
             myServiceData.arguments = getArgs();
-            myServiceData.description = "A DESCRIPTION";
+            myServiceData.description = "This is my super fancy description";
             myServiceData.responses = getResp();
             myServiceData.securityLevel = 2;
             myServiceData.serviceName = "AName";

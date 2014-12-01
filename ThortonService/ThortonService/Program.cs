@@ -11,70 +11,48 @@ namespace ThortonService
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
             SortedList<String, String> rawConfigs = ConfigHandler.readConfigFile();
+
+            IPAddress serviceIP = IPAddress.Parse("127.0.0.1");
+            Int32 servicePort = 2500;
+            IPAddress registryIP = IPAddress.Parse("127.0.0.1");
+            Int32 regPort = 3128;
             
-            RegistryMessageBuilder.registryIP = IPAddress.Parse("127.0.0.1");
-            RegistryMessageBuilder.registryPort = 3128;
+            String registryReturn = String.Empty;
+            
+
+            RegistryMessageBuilder.registryIP = registryIP;
+            RegistryMessageBuilder.registryPort = regPort;
             RegistryMessageBuilder.teamName = "Freelancer";
-            RegistryMessageBuilder.teamID = 1210;
+            RegistryMessageBuilder.teamID = 0;
 
             RegistryMessageBuilder.registerTeam();
             ServiceData[] myService = ServiceManager.getServiceData();
             foreach(ServiceData data in myService)
             {
-                RegistryMessageBuilder.publishService(data);
+               registryReturn = RegistryMessageBuilder.publishService(data);
             }
+            if(registryReturn.StartsWith(HL7SpecialChars.BOM + "SOA|OK"))
+            {
+                String[] a = registryReturn.Split(new char[] { '|' });
+                Int32 teamID;
+                if(Int32.TryParse(a[2], out teamID))
+                {
+                    RegistryMessageBuilder.teamID = teamID;
+                    IO.HL7Server test = new IO.HL7Server(servicePort, serviceIP);
+                    //TODO add Logging server starting up
+                    test.ListenForClients();
+                }
 
-            IO.HL7Server test = new IO.HL7Server(2500, IPAddress.Parse("127.0.0.1"));
-
-            test.ListenForClients();
-
-
-            /*
-
-            //Parse Configs.
-
-            //Register Team Names
-
-            //Register Services
-
-            //Start Listening
-
-            RegistryMessageBuilder.registryIP = IPAddress.Parse("127.0.0.1");
-            RegistryMessageBuilder.registryPort = 3128;
-            RegistryMessageBuilder.teamName = "Freelancer";
-            RegistryMessageBuilder.teamID = 1210;
-
-          //  Console.WriteLine("Register Team");
-           // Console.WriteLine( RegistryMessageBuilder.registerTeam());
-
-            //Console.WriteLine();
-            //Console.WriteLine("Register Services");
-            //ServiceData[] myService = ServiceManager.getServiceData();
-            //foreach (ServiceData data in myService)
-            //{
-            //    Console.WriteLine(RegistryMessageBuilder.publishService(data));
-            //}
-
-            //Console.WriteLine();
-            //Console.WriteLine("Query Services");
-            //Console.WriteLine(RegistryMessageBuilder.queryTeam("Freelancer", 1210, "GIORP-TOTAL"));
-
-            //Console.WriteLine();
-            //Console.WriteLine("Press key to Continue");
-            //Console.ReadKey();
-
-            PurchaseTotallerService test = new PurchaseTotallerService();
-
-            Console.WriteLine(test.Process(HL7SpecialChars.BOM + "DRC|EXEC-SERVICE|Freelancer|1210|" + HL7SpecialChars.EOS + "SRV||GIORP-TOTAL||2|||" + HL7SpecialChars.EOS + "ARG|1|Subtotal|double||5.55|" + HL7SpecialChars.EOS + "ARG|2|Region|string||ON|" + HL7SpecialChars.EOS + HL7SpecialChars.EOM + HL7SpecialChars.EOS));
-
-            Console.ReadKey();
-
-            */
-
-
+               //TODO Error From server.
+                Console.WriteLine("ERROR: " + registryReturn);
+            }
+            
+            //TODO Logging server shutting down
+        
         }
     }
 }
