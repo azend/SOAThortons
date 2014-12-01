@@ -11,19 +11,30 @@ namespace ThortonsHL7
     public class Comms
     {
         private static Dictionary<string, string> registerTeam(HL7Client client, string teamName) {
-            Dictionary<string, string> teamInfo = new Dictionary<string, string>();
+            Dictionary<string, string> teamInfo = null;
 
             string request = Shared.Messages.RegisterTeam.GenerateMessage(teamName);
             Logger.LogMessage("Sending register team request", request);
             client.Send(request);
 
             string response = client.Recieve();
-            Logger.LogMessage("Recieving register team response", response);
-            Shared.Messages.RegisterTeam.ParseMessage(response);
+            if (response != null)
+            {
+                teamInfo = new Dictionary<string, string>();
 
-            teamInfo.Add("Name", teamName);
-            teamInfo.Add("ID", Shared.Messages.RegisterTeam.GetTeamID());
-            teamInfo.Add("Expiry", Shared.Messages.RegisterTeam.GetExpiry());
+                Logger.LogMessage("Recieving register team response", response);
+                Shared.Messages.RegisterTeam.ParseMessage(response);
+
+                teamInfo.Add("Name", teamName);
+                teamInfo.Add("ID", Shared.Messages.RegisterTeam.GetTeamID());
+                teamInfo.Add("Expiry", Shared.Messages.RegisterTeam.GetExpiry());
+            }
+            else
+            {
+                Logger.Log("---");
+                Logger.Log("Registry did not send back a response");
+            }
+            
 
             return teamInfo;
         }
