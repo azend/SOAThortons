@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comms.cs" />
+    <Compile Include="HL7Client.cs" />
     <Compile Include="PurchaseTotallerResults.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,7 +70,7 @@
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TestForm.Designer.cs">
+    <Compile Include="TestForm.designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="PurchaseTotallerInput.resx">

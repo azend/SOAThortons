@@ -18,6 +18,8 @@ namespace ThortonsHL7
         {
             InitializeComponent();
 
+            //Dictionary<string, string> teamInfo = Comms.GetServices();
+
         }
 
         private void buttonPurchaseTotaller_Click(object sender, EventArgs e)
