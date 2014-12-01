@@ -63,7 +63,7 @@ namespace ThortonService
 
         }
 
-        static String[] ParseConfig(SortedList<String, String> configStrings)
+        public static String[] ParseConfig(SortedList<String, String> configStrings)
         {
             List<String> returnValue = new List<String>();
 
