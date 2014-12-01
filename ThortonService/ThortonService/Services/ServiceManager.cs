@@ -52,7 +52,7 @@ namespace ThortonService.Services
         }
 
 
-        static ServiceInterface getService(String name)
+        public static ServiceInterface getService(String name)
         {
             ServiceInterface item;
             foreach (String service in serviceList)

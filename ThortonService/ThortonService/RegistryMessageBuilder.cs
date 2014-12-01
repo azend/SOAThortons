@@ -18,7 +18,7 @@ namespace ThortonService
 
         public static String registerTeam()
         {
-            String message = String.Format("{0}{1}{2}REG-TEAM{2}{2}{2}{3}INF{2}{4}{2}{2{2}{3}{5}{3}", HL7SpecialChars.BOM, HL7SpecialChars.inMessageStart, HL7SpecialChars.delim, HL7SpecialChars.EOS, teamName, HL7SpecialChars.EOM);
+            String message = String.Format("{0}DRC|REG-TEAM|||{1}INF|{3}|||{1}{2}{1}", HL7SpecialChars.BOM, HL7SpecialChars.EOS, HL7SpecialChars.EOM, teamName);
             RegistryIO reg = new RegistryIO(registryPort, registryIP);
             String response = reg.SendMessage(message);
             return response;
@@ -31,7 +31,7 @@ namespace ThortonService
             String response = reg.SendMessage(message);
             return response;
         }
-        public static String queryTeam(String myTeamName, Int32 myTeamId, String tTeamName, Int32 tTeamId, String serviceName)
+        public static String queryTeam(String tTeamName, Int32 tTeamId, String serviceName)
         {
             String message = String.Format("{0}DRC|QUERY-TEAM|{1}|{2}|{3}INF|{4}|{5}|{6}|{3}{7}{3}", HL7SpecialChars.BOM, teamName, teamID, HL7SpecialChars.EOS, tTeamName, tTeamId, serviceName, HL7SpecialChars.EOM);
             RegistryIO reg = new RegistryIO(registryPort, registryIP);

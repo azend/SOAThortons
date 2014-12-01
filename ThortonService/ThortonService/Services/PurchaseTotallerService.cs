@@ -24,6 +24,16 @@ namespace ThortonService.Services
         public string Value { get; set; }
         public Boolean Mandatory { get; set; }
 
+        public ServiceArgument()
+        {
+        }
+        public ServiceArgument(String name, string DataType, Boolean mandatory)
+        {
+            this.Name = name;
+            this.DataType = DataType;
+            this.Mandatory = mandatory;
+        }
+
         public string getArgument(Int32 argPos)
         {
             String mandatoryVal;
@@ -45,6 +55,15 @@ namespace ThortonService.Services
         public string Name { get; set; }
         public string DataType { get; set; }
 
+        public ServiceResponses(string Name, String dataType)
+        {
+            this.Name = Name;
+            this.DataType = dataType;
+        }
+        public ServiceResponses()
+        {
+
+        }
         public string getArgument(Int32 argPos)
         {
             return String.Format("RSP|{0}|{1}|{2}||", argPos, Name, DataType);
@@ -74,13 +93,9 @@ namespace ThortonService.Services
         public override ServiceArgument[] getArgs()
         {
             List<ServiceArgument> args = new List<ServiceArgument>();
-            ServiceArgument temp = new ServiceArgument();
-            temp.Name = "FirstName";
-            temp.DataType = "string";
-            temp.Mandatory = true;
-
-            args.Add(temp);
-
+            
+            args.Add(new ServiceArgument("Subtotal","double",true));
+            args.Add(new ServiceArgument("Region", "string", true));
 
 
             return args.ToArray();
@@ -91,16 +106,17 @@ namespace ThortonService.Services
         public override ServiceResponses[] getResp()
         {
             List<ServiceResponses> resp = new List<ServiceResponses>();
-            ServiceResponses temp = new ServiceResponses();
-            temp.DataType = "string";
-            temp.Name = "myNAme";
-            resp.Add(temp);
+            resp.Add(new ServiceResponses("Subtotal", "double"));
+            resp.Add(new ServiceResponses("GSTAmount", "double"));
+            resp.Add(new ServiceResponses("PSTAmount", "double"));
+            resp.Add(new ServiceResponses("HSTAmount", "double"));
+            resp.Add(new ServiceResponses("Total", "double"));
             return resp.ToArray();
         }
 
         public override string serviceName
         {
-            get { return "Purchase Totaller Service"; }
+            get { return "PurchaseTotallerService"; }
         }
 
         public override string Process(string command)
@@ -115,11 +131,25 @@ namespace ThortonService.Services
                 Logger.Log("  >> " + line);
             }
 
-            // Parse the incoming freakin' message
-            Regex searchRegex = new Regex("[" + BOM + "]DRC[|]EXEC-SERVICE[|](.*)[|](.*)[|][" + EOS + "]SRV[|][|](.*)[|][|](\\d+)[|][|][|][" + EOS + "](ARG[|]\\d[|].*[|].*[|][|].*[|][" + EOS + "])+[" + EOM + "][" + EOS + "]");
-            Regex argumentRegex = new Regex("ARG[|](\\d)[|](.*)[|](.*)[|][|](.*)[|][" + EOS + "]");
-            Match m = searchRegex.Match(command);
+            String[] list = command.Split(new char[] { EOS });
+            Boolean getOutOfHere = false;
+            String stringToRegex = list[0] + EOS + list[1];
+            Regex mySearchRegex = new Regex("[" + BOM + "]DRC[|]EXEC-SERVICE[|](.*)[|](.*)[|][" + EOS + "]SRV[|][|](.*)[|][|](\\d+)[|][|][|]");
 
+            Match m = mySearchRegex.Match(command);
+
+            
+
+
+
+
+
+            // Parse the incoming freakin' message
+            //Regex searchRegex = new Regex("[" + BOM + "]DRC[|]EXEC-SERVICE[|](.*)[|](.*)[|][" + EOS + "]SRV[|][|](.*)[|][|](\\d+)[|][|][|][" + EOS + "](ARG[|]\\d[|].*[|].*[|][|].*[|][" + EOS + "])+[" + EOM + "][" + EOS + "]");
+            //Regex argumentRegex = new Regex("ARG[|](\\d)[|](.*)[|](.*)[|][|](.*)[|][" + EOS + "]");
+           // Match m = searchRegex.Match(command);
+
+            Regex argumentRegex = new Regex("ARG[|](\\d)[|](.*)[|](.*)[|][|](.*)[|]");
             if (m != null)
             {
                 string teamName = m.Groups[1].Value;
@@ -128,10 +158,16 @@ namespace ThortonService.Services
                 string numArgs = m.Groups[4].Value;
                 List<ServiceArgument> args = new List<ServiceArgument>();
 
-                CaptureCollection mArgs = m.Groups[5].Captures;
-                foreach (Capture cArg in mArgs)
+                //CaptureCollection mArgs = m.Groups[5].Captures;
+//                foreach (Capture cArg in mArgs)
+                
+                for (int i = 2; i < (list.Count()); i++ )
                 {
-                    Match mArg = argumentRegex.Match(cArg.Value);
+
+                    Match mArg = argumentRegex.Match(list[i]);
+                    //Match mArg = argumentRegex.Match(cArg.Value);
+                    
+                    
                     if (mArg != null)
                     {
                         int argPosition = -1;
@@ -147,7 +183,8 @@ namespace ThortonService.Services
                             Value = argValue
                         };
 
-                        args.Insert(argPosition, arg);
+                        //args.Insert(argPosition, arg);
+                        args.Add(arg);
                     }
 
                 }
@@ -166,7 +203,7 @@ namespace ThortonService.Services
                     if (region != null)
                     {
                         double total = subtotal + ((region.GSTRate / 100) * subtotal) + ((region.HSTRate / 100) * subtotal) + ((region.PSTRate / 100) * subtotal);
-
+                        total = Math.Round(total, 2);
                         response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Total|double|{0}|" + EOS + EOM + EOS, total);
                     }
 

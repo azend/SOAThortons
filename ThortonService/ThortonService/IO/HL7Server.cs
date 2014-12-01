@@ -66,11 +66,13 @@ namespace ThortonService.IO
 
                     MessagingHandler myMessageHandler = new MessagingHandler();
                     returnMessage = myMessageHandler.runMessageHandling(completeMessage.ToString());
+                    Console.WriteLine(returnMessage);
                     //Extract message from completeMessage
 
                 }
                 catch
                 {
+                    Console.WriteLine("SocketError");
                     //a socket error has occured
                 }
 
