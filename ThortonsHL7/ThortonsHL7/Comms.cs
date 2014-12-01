@@ -32,6 +32,20 @@ namespace ThortonsHL7
             return success;
         }
 
+        private static Dictionary<string, string> queryService(HL7Client client, string teamName, string teamID, string tagName) {
+            Dictionary<string, string> serviceInfo = new Dictionary<string, string>();
+
+            client.Send(Shared.Messages.QueryService.GenerateMessage(teamName, teamID, tagName));
+            Shared.Messages.QueryService.ParseMessage(client.Recieve());
+
+            serviceInfo["Name"] = Shared.Messages.QueryService.GetServerName();
+            serviceInfo["IPAddress"] = Shared.Messages.QueryService.GetServerIP();
+            serviceInfo["Port"] = Shared.Messages.QueryService.GetPort();
+
+
+            return serviceInfo;
+        }
+
         public static Dictionary<string, string> RegisterTeam()
         {
             HL7Client client = new HL7Client();
@@ -58,16 +72,20 @@ namespace ThortonsHL7
 
         public static Dictionary<string, string> QueryService()
         {
+            Dictionary<string, string> serviceInfo = null;
+
             HL7Client client = new HL7Client();
             client.Connect();
 
             Dictionary<string, string> teamInfo = registerTeam(client);
 
+            serviceInfo = queryService(client, teamInfo["Name"], teamInfo["ID"], "GIORP-TOTAL");
+
 
 
             client.Disconnect();
 
-            return teamInfo;
+            return serviceInfo;
         }
     }
 }

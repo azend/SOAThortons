@@ -51,8 +51,13 @@ namespace ThortonsHL7
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Testing Response: SOA|OK|||9|SRV|TeamFreelancer|totalPurchase||2|5|Returns a calculated amount of money| ARG|1|Province|string|mandatory|| ARG|2|totalMoney|float|mandatory|| RSP|1|PST|string||RSP|2|HST|string||RSP|3|GST|string||RSP|4|SubTotalAmount|string||RSP|5|TotalPurchaseAmount|string||MCH|142.112.50.103|50002|   \nReturn: " + QueryService.ParseMessage("SOA|OK|||9|SRV|TeamFreelancer|totalPurchase||2|5|Returns a calculated amount of money| ARG|1|Province|string|mandatory|| ARG|2|totalMoney|float|mandatory|| RSP|1|PST|string||RSP|2|HST|string||RSP|3|GST|string||RSP|4|SubTotalAmount|string||RSP|5|TotalPurchaseAmount|string||MCH|142.112.50.103|50002| Server" ));
-            MessageBox.Show("Testing Response: SOA|NOT-OK|-1|SOA command <whatever you sent> - UNKNOWN|| \nReturn: " + UnregisterTeam.ParseMessage("SOA|NOT-OK|-1|SOA command <whatever you sent> - UNKNOWN||"));           
+            if (teamInfo != null)
+            {
+
+                Dictionary<string, string> serviceInfo = Comms.QueryService();
+
+                MessageBox.Show(String.Format("Name: {0}\nIP Address: {1}\nPort: {2}\n", serviceInfo["Name"], serviceInfo["IPAddress"], serviceInfo["Port"]));
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
