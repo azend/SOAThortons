@@ -38,10 +38,18 @@ namespace Shared.Messages
 
             if (pass.Success)
             {
-                respPosition = new string[rsps.Count];
-                respName = new string[rsps.Count];
-                respDataType = new string[rsps.Count];
-                respValue = new string[rsps.Count];
+                try
+                {
+                    respPosition = new string[rsps.Count];
+                    respName = new string[rsps.Count];
+                    respDataType = new string[rsps.Count];
+                    respValue = new string[rsps.Count];
+                }
+                catch(Exception)
+                {
+                    success = false;
+                    return success;
+                }
 
                 foreach(Match rsp in rsps)
                 {

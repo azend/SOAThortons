@@ -45,9 +45,17 @@ namespace Shared.Messages
             {
                 success = true;
 
-                serverName = srv.Groups[2].Value;
-                numArgs = srv.Groups[3].Value;
-                numResponses = Convert.ToInt32(srv.Groups[4].Value);
+                try
+                {
+                    serverName = srv.Groups[2].Value;
+                    numArgs = srv.Groups[3].Value;
+                    numResponses = Convert.ToInt32(srv.Groups[4].Value);
+                }
+                catch(Exception)
+                {
+                    success = false;
+                    return success;
+                }
 
                 argPosition = new string[Convert.ToInt32(numArgs)];
                 argName = new string[Convert.ToInt32(numArgs)];
