@@ -10,4 +10,4 @@ servicePort|3000
 
 //SOA-Registry
 registryIP|127.0.0.1
-registryPort|3218
+registryPort|3128

@@ -59,22 +59,15 @@ namespace ThortonService
                     RegistryMessageBuilder.registryPort = regPort;
                     RegistryMessageBuilder.teamName = "Freelancer";
                     RegistryMessageBuilder.teamID = 0;
-
-                    Logger.Log("Registering team against registry with name " + RegistryMessageBuilder.teamName);
-
-                    RegistryMessageBuilder.registerTeam();
-
-                    Logger.Log("Got back team ID from registry " + RegistryMessageBuilder.teamID);
                     */
-                    String registryReturn = String.Empty;
-                    ServiceData[] myService = ServiceManager.getServiceData();
+                    Logger.Log("Registering team against registry with name " + Configs.teamName);
 
-                    Logger.Log("Publishing services to registry");
-                    foreach (ServiceData data in myService)
-                    {
-                        Logger.Log(string.Format("Publishing service {0} to registry", data.serviceName));
-                        registryReturn = RegistryMessageBuilder.publishService(data);
-                    }
+
+
+
+
+                    String registryReturn = RegistryMessageBuilder.registerTeam();
+                    
                     if (registryReturn.StartsWith(HL7SpecialChars.BOM + "SOA|OK"))
                     {
                         String[] a = registryReturn.Split(new char[] { '|' });
@@ -82,9 +75,19 @@ namespace ThortonService
                         if (Int32.TryParse(a[2], out teamID))
                         {
                             Configs.teamID = teamID;
-
+                            Logger.Log("Got back team ID from registry " + Configs.teamID);
                             Logger.Log("Creating HL7 server and binding to socket");
                             IO.HL7Server test = new IO.HL7Server(Configs.servicePort, Configs.serviceIP);
+
+                            ServiceData[] myService = ServiceManager.getServiceData();
+
+                            Logger.Log("Publishing services to registry");
+                            foreach (ServiceData data in myService)
+                            {
+                                Logger.Log(string.Format("Publishing service {0} to registry", data.serviceName));
+                                registryReturn = RegistryMessageBuilder.publishService(data);
+                            }
+
 
                             Logger.Log("Listening for clients...");
                             test.ListenForClients();

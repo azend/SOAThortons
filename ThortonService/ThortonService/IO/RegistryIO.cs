@@ -37,7 +37,7 @@ namespace ThortonService.IO
                     Byte[] msg = Encoding.ASCII.GetBytes(message);
                     stream.Write(msg, 0, msg.Length);
 
-                    int bytesSent = sender.Send(msg);
+                   // int bytesSent = sender.Send(msg);
 
 
                     
@@ -51,8 +51,13 @@ namespace ThortonService.IO
                 }
                 return completeMessage.ToString();
                 }
+                catch(Exception e)
+            {
+                Console.WriteLine(e.InnerException);
+            }
                 catch
                 {
+                    Console.WriteLine("TEST");
                     //a socket error has occured
                 }
 

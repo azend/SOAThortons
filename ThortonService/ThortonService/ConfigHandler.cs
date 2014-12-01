@@ -100,6 +100,10 @@ namespace ThortonService
                         {
                             returnValue.Add("Config| teamName| " + config.Value + "is invalid for a Team Name");
                         }
+                        else
+                        {
+                            Configs.teamName = config.Value;
+                        }
                         break;
                     case "teamID":
                         if (!(Int32.TryParse(config.Value, out Configs.teamID)))
