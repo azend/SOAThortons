@@ -54,8 +54,7 @@ namespace ThortonsHL7
             // Attempt to register team (needs testing)
             teamName = textBoxTeamName.Text;
 
-            //Dictionary<string, string> teamInfo = Comms.RegisterTeam(teamName);
-            Dictionary<string, string> teamInfo = null;
+            Dictionary<string, string> teamInfo = Comms.RegisterTeam(teamName);
 
             if (teamInfo != null)
             {
