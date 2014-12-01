@@ -45,9 +45,12 @@
     <Compile Include="IO\HL7Server.cs" />
     <Compile Include="IO\HL7SpecialChars.cs" />
     <Compile Include="IO\RegistryIO.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="MessagingHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regions.cs" />
+    <Compile Include="Services\PurchaseTotallerService.cs" />
     <Compile Include="Services\ServiceInterface.cs" />
     <Compile Include="Services\ServiceManager.cs" />
     <Compile Include="Services\AbstractService.cs" />

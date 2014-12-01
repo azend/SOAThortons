@@ -10,6 +10,6 @@ namespace ThortonService.Services
     {
         string serviceName{get;}
 
-        public abstract string Process(string command);
+        string Process(string command);
     }
 }
