@@ -62,7 +62,7 @@ namespace ThortonsHL7
                 int bytesRec = sock.Receive(bytes);
                 response = Encoding.ASCII.GetString(bytes, 0, bytesRec);
 
-                return response;
+                
             }
 
             return response;

@@ -17,7 +17,7 @@ namespace Shared.Messages
 
         public static string GenerateMessage(string teamName)
         {
-            return String.Format(BOM + "DRC|REG-TEAM|||" + EOS + "INF|{0}|" + EOS + EOM + EOS, teamName);
+            return String.Format(BOM + "DRC|REG-TEAM|||" + EOS + "INF|{0}|||" + EOS + EOM + EOS, teamName);
         }
 
         public static bool ParseMessage(string message)
