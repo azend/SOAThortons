@@ -46,11 +46,11 @@ namespace ThortonService
 
             for (int i = 0; i < data.arguments.Count(); i++)
             {
-                message.AppendFormat("{0}{1}", data.arguments[i].getArgument(i), HL7SpecialChars.EOS);
+                message.AppendFormat("{0}{1}", data.arguments[i].getArgument(i+1), HL7SpecialChars.EOS);
             }
             for (int i = 0; i < data.responses.Count(); i++)
             {
-                message.AppendFormat("{0}{1}", data.responses[i].getArgument(i), HL7SpecialChars.EOS);
+                message.AppendFormat("{0}{1}", data.responses[i].getArgument(i+1), HL7SpecialChars.EOS);
             }
             message.AppendFormat("MCH|{0}|{1}|{2}{3}{2}", registryIP, registryPort, HL7SpecialChars.EOS, HL7SpecialChars.EOM, HL7SpecialChars.EOS);
 

@@ -12,8 +12,8 @@ namespace ThortonService.Services
         public String tagName { get; set; }
         public String serviceName { get; set; }
         public Int32 securityLevel { get; set; }
-        public  String description { get; set; }
-       public ServiceArgument[] arguments { get; set; }
+        public String description { get; set; }
+        public ServiceArgument[] arguments { get; set; }
         public ServiceResponses[] responses { get; set; }
     }
 
@@ -27,8 +27,9 @@ namespace ThortonService.Services
         public string getArgument(Int32 argPos)
         {
             String mandatoryVal;
-            if(Mandatory == true)
-            { mandatoryVal = "mandatory";
+            if (Mandatory == true)
+            {
+                mandatoryVal = "mandatory";
             }
             else
             {
@@ -46,50 +47,61 @@ namespace ThortonService.Services
 
         public string getArgument(Int32 argPos)
         {
-           return String.Format("RSP|{0}|{1}|{2}||", argPos, Name, DataType);
+            return String.Format("RSP|{0}|{1}|{2}||", argPos, Name, DataType);
         }
     }
 
 
-    public class PurchaseTotallerService : ServiceInterface
+    public class PurchaseTotallerService : AbstractService, ServiceInterface
     {
         public const char BOM = '\xB';
         public const char EOS = '\xD';
         public const char EOM = '\x1C';
-        public ServiceData getData()
+        public override ServiceData getData()
         {
             ServiceData myServiceData = new ServiceData();
             myServiceData.arguments = getArgs();
             myServiceData.description = "A DESCRIPTION";
             myServiceData.responses = getResp();
             myServiceData.securityLevel = 2;
-            myServiceData.serviceName = "A Name";
-            myServiceData.tagName = "Your It";
+            myServiceData.serviceName = "AName";
+            myServiceData.tagName = "GIORP-TOTAL";
             return myServiceData;
 
         }
-        public ServiceArgument[] getArgs()
+        public override ServiceArgument[] getArgs()
         {
             List<ServiceArgument> args = new List<ServiceArgument>();
+            ServiceArgument temp = new ServiceArgument();
+            temp.Name = "FirstName";
+            temp.DataType = "string";
+            temp.Mandatory = true;
+
+            args.Add(temp);
+
+
 
             return args.ToArray();
 
 
         }
 
-        public ServiceResponses[] getResp()
+        public override ServiceResponses[] getResp()
         {
             List<ServiceResponses> resp = new List<ServiceResponses>();
-
+            ServiceResponses temp = new ServiceResponses();
+            temp.DataType = "string";
+            temp.Name = "myNAme";
+            resp.Add(temp);
             return resp.ToArray();
         }
 
-        public string serviceName
+        public override string serviceName
         {
             get { return "Purchase Totaller Service"; }
         }
 
-        public string Process(string command)
+        public override string Process(string command)
         {
             string response = BOM + "PUB|NOT-OK|-6|An error has occurred.|" + EOS + EOM + EOS;
 
@@ -135,7 +147,7 @@ namespace ThortonService.Services
 
                         args.Insert(argPosition, arg);
                     }
-                    
+
                 }
 
                 // Actually do the service
@@ -155,7 +167,7 @@ namespace ThortonService.Services
 
                         response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Total|double|{0}|" + EOS + EOM + EOS, total);
                     }
-                    
+
                 }
 
             }
