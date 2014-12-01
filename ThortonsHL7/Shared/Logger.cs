@@ -20,5 +20,31 @@ namespace Shared
                 file.WriteLine(line);
             }
         }
+
+        public static void LogMessage(string messageDescription, string messageBody)
+        {
+            Log("---");
+            Log(messageDescription + ":");
+            if (messageBody != null)
+            {
+                if (messageBody.IndexOf('\x0d') > -1)
+                {
+                    IEnumerable<string> lines = messageBody.Split('\x0d');
+                    foreach (string line in lines)
+                    {
+                        Log("  >> " + line);
+                    }
+                }
+                else
+                {
+                    Log("  >> " + messageBody);
+                }
+            }
+            else
+            {
+                Logger.Log("Registry did not send back a response.");
+            }
+            
+        }
     }
 }
