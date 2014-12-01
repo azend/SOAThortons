@@ -22,6 +22,13 @@ namespace ThortonService
             Logger.Log("Reading configuration file...");
             SortedList<String, String> rawConfigs = ConfigHandler.readConfigFile();
             Logger.Log("Finished reading in configuration file.");
+            Boolean badConfig = false;
+
+
+            
+
+
+
 
             IPAddress serviceIP = IPAddress.Parse("127.0.0.1");
             Int32 servicePort = 2500;
