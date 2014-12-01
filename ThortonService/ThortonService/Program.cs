@@ -15,6 +15,13 @@ namespace ThortonService
         static void Main(string[] args)
         {
             SortedList<String, String> rawConfigs = ConfigHandler.readConfigFile();
+            Boolean badConfig = false;
+
+
+            
+
+
+
 
             IPAddress serviceIP = IPAddress.Parse("127.0.0.1");
             Int32 servicePort = 2500;
