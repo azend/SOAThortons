@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -124,12 +125,7 @@ namespace ThortonService.Services
             string response = BOM + "PUB|NOT-OK|-6|An error has occurred.|" + EOS + EOM + EOS;
 
             // Log
-            Logger.Log("---");
-            Logger.Log("Receiving service request :");
-            foreach (string line in command.Split(EOS))
-            {
-                Logger.Log("  >> " + line);
-            }
+            Logger.LogMessage("Receiving purchase totaller service request", command);
 
             String[] list = command.Split(new char[] { EOS });
             Boolean getOutOfHere = false;
@@ -200,6 +196,9 @@ namespace ThortonService.Services
 
                     Region region = Regions.GetRegionByCode(regionCode);
 
+                    Logger.Log("---");
+                    Logger.Log(string.Format("Found region based on code: {0}", region.Name));
+
                     if (region != null)
                     {
                         double total = subtotal + ((region.GSTRate / 100) * subtotal) + ((region.HSTRate / 100) * subtotal) + ((region.PSTRate / 100) * subtotal);
@@ -212,12 +211,7 @@ namespace ThortonService.Services
             }
 
             // Log
-            Logger.Log("---");
-            Logger.Log("Responding to service request :");
-            foreach (string line in response.Split(EOS))
-            {
-                Logger.Log("  >> " + line);
-            }
+            Logger.LogMessage("Responded with purchase totaller service response", response);
 
             return response;
         }

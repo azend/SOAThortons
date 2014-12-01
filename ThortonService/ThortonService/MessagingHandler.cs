@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace ThortonService
 
         public String runMessageHandling(String message)
         {
+            Logger.LogMessage("Reciving message", message);
+
             String returnMessage = string.Empty;
             int indexofSOM = message.IndexOf(HL7SpecialChars.BOM);
             string eofString = HL7SpecialChars.EOS.ToString() + HL7SpecialChars.EOM.ToString() + HL7SpecialChars.EOS.ToString();
@@ -63,8 +66,8 @@ namespace ThortonService
                 }
 
             }
-            
 
+            Logger.LogMessage("Returning response to message", returnMessage);
 
 
             return returnMessage;
