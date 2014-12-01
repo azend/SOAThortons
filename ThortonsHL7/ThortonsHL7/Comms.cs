@@ -22,6 +22,16 @@ namespace ThortonsHL7
             return teamInfo;
         }
 
+        private static bool unregisterTeam(HL7Client client, string teamName, int teamId)
+        {
+            Dictionary<string, string> teamInfo = new Dictionary<string, string>();
+
+            client.Send(Shared.Messages.UnregisterTeam.GenerateMessage(teamName, teamId));
+            bool success = Shared.Messages.UnregisterTeam.ParseMessage(client.Recieve());
+
+            return success;
+        }
+
         public static Dictionary<string, string> RegisterTeam()
         {
             HL7Client client = new HL7Client();
@@ -34,12 +44,26 @@ namespace ThortonsHL7
             return teamInfo;
         }
 
-        public static Dictionary<string, string> GetServices()
+        public static bool UnregisterTeam(string teamName, int teamID)
+        {
+            HL7Client client = new HL7Client();
+            client.Connect();
+
+            bool success = unregisterTeam(client, teamName, teamID);
+
+            client.Disconnect();
+
+            return success;
+        }
+
+        public static Dictionary<string, string> QueryService()
         {
             HL7Client client = new HL7Client();
             client.Connect();
 
             Dictionary<string, string> teamInfo = registerTeam(client);
+
+
 
             client.Disconnect();
 
