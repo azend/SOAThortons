@@ -8,8 +8,8 @@ namespace Shared.Messages
 {
     public class IMessage
     {
-        protected const char BOM = '\x11';
-        protected const char EOS = '\x13';
-        protected const char EOM = '\x28';
+        protected const char BOM = '\xB';
+        protected const char EOS = '\xD';
+        protected const char EOM = '\x1C';
     }
 }
