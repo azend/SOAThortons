@@ -10,8 +10,7 @@ namespace ThortonService.Services
     class ServiceManager
     {
         static List<String> serviceList = new List<string>();
-        static String teamName = String.Empty;
-        static Int32 teamID;
+
 
         static private string currentNamespace = String.Empty;
         
@@ -21,7 +20,19 @@ namespace ThortonService.Services
             currentNamespace = current.DeclaringType.Namespace;
         }
 
+        public static ServiceArgument[] getArguments()
+        {
+            List<ServiceArgument> args = new List<ServiceArgument>();
+            /*ServiceInterface item;
+            foreach (String service in serviceList)
+            {
+                item = (AbstractService)Activator.CreateInstance(Type.GetType(service));
+                args.Add(item.getArgs());
+            }*/
 
+            //TODO I AM WORKING HERE RIGHT NOW!!!!!
+            return args.ToArray();
+        }
 
 
         static ServiceInterface getService(String name)

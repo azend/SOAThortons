@@ -11,5 +11,9 @@ namespace ThortonService.Services
         string serviceName{get;}
 
         string Process(string command);
+
+        ServiceArgument[] getArgs();
+
+        ServiceResponses[] getResp();
     }
 }

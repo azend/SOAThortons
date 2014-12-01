@@ -8,10 +8,11 @@ namespace ThortonService.IO
 {
     public static class HL7SpecialChars
     {
-        public const char BOM = '\x11';
-        public const char EOS = '\x13';
-        public const char EOM = '\x28';
+        public const char BOM = '\xB';
+        public const char EOS = '\xD';
+        public const char EOM = '\x1C';
 
         public const string inMessageStart = "DRC";
+        public const char delim = '|';
     }
 }

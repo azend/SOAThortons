@@ -14,7 +14,11 @@ namespace ThortonService.Services
             get;
         }
 
-        public abstract String Process(String command); 
+        public abstract String Process(String command);
+
+        public abstract ServiceArgument[] getArgs();
+
+        public abstract ServiceResponses[] getResp();
 
       /*  protected StateObject state = null;
         protected List<string> parameters = new List<string>();

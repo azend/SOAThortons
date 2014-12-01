@@ -7,19 +7,83 @@ using System.Threading.Tasks;
 
 namespace ThortonService.Services
 {
+    public class ServiceData
+    {
+        public String tagName { get; set; }
+        public String serviceName { get; set; }
+        public Int32 securityLevel { get; set; }
+        public  String description { get; set; }
+       public ServiceArgument[] arguments { get; set; }
+        public ServiceResponses[] responses { get; set; }
+    }
 
-    class ServiceArgument
+    public class ServiceArgument
     {
         public string Name { get; set; }
         public string DataType { get; set; }
         public string Value { get; set; }
+        public Boolean Mandatory { get; set; }
+
+        public string getArgument(Int32 argPos)
+        {
+            String mandatoryVal;
+            if(Mandatory == true)
+            { mandatoryVal = "mandatory";
+            }
+            else
+            {
+                mandatoryVal = "optional";
+            }
+
+            return String.Format("ARG|{0}|{1}|{2}|{3}||", argPos, Name, DataType, mandatoryVal);
+        }
     }
 
-    class PurchaseTotallerService : ServiceInterface
+    public class ServiceResponses
     {
-        public const char BOM = '\x11';
-        public const char EOS = '\x13';
-        public const char EOM = '\x28';
+        public string Name { get; set; }
+        public string DataType { get; set; }
+
+        public string getArgument(Int32 argPos)
+        {
+           return String.Format("RSP|{0}|{1}|{2}||", argPos, Name, DataType);
+        }
+    }
+
+
+    public class PurchaseTotallerService : ServiceInterface
+    {
+        public const char BOM = '\xB';
+        public const char EOS = '\xD';
+        public const char EOM = '\x1C';
+
+        public ServiceData getServData()
+        {
+            ServiceData myServiceData = new ServiceData();
+            myServiceData.arguments = getArgs();
+            myServiceData.description = "A DESCRIPTION";
+            myServiceData.responses = getResp();
+            myServiceData.securityLevel = 2;
+            myServiceData.serviceName = "A Name";
+            myServiceData.tagName = "Your It";
+            return myServiceData;
+
+        }
+        public ServiceArgument[] getArgs()
+        {
+            List<ServiceArgument> args = new List<ServiceArgument>();
+
+            return args.ToArray();
+
+
+        }
+
+        public ServiceResponses[] getResp()
+        {
+            List<ServiceResponses> resp = new List<ServiceResponses>();
+
+            return resp.ToArray();
+        }
 
         public string serviceName
         {
