@@ -9,13 +9,13 @@ namespace ThortonsHL7
 {
     public class Comms
     {
-        private static Dictionary<string, string> registerTeam(HL7Client client) {
+        private static Dictionary<string, string> registerTeam(HL7Client client, string teamName) {
             Dictionary<string, string> teamInfo = new Dictionary<string, string>();
 
-            client.Send(Shared.Messages.RegisterTeam.GenerateMessage("Freelancer"));
+            client.Send(Shared.Messages.RegisterTeam.GenerateMessage(teamName));
             Shared.Messages.RegisterTeam.ParseMessage(client.Recieve());
 
-            teamInfo.Add("Name", "Freelancer");
+            teamInfo.Add("Name", teamName);
             teamInfo.Add("ID", Shared.Messages.RegisterTeam.GetTeamID());
             teamInfo.Add("Expiry", Shared.Messages.RegisterTeam.GetExpiry());
 
@@ -46,12 +46,12 @@ namespace ThortonsHL7
             return serviceInfo;
         }
 
-        public static Dictionary<string, string> RegisterTeam()
+        public static Dictionary<string, string> RegisterTeam(string teamName)
         {
             HL7Client client = new HL7Client();
             client.Connect();
 
-            Dictionary<string, string> teamInfo = registerTeam(client);
+            Dictionary<string, string> teamInfo = registerTeam(client, teamName);
 
             client.Disconnect();
 
