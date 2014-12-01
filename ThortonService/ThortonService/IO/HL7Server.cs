@@ -24,8 +24,12 @@ namespace ThortonService.IO
 
         public HL7Server(Int32 portNumber, IPAddress ipAddress)
         {
+            if (ipAddress == null)
+            {
+                throw new ArgumentNullException("IP address object is null");
+            }
+
             this.ipAddress = ipAddress;
-            //TODO potential for error, assumes there is an IPAddress available
             this.port = portNumber;
         }
         public void ListenForClients()
