@@ -24,13 +24,11 @@ namespace ThortonService
 
             if(indexOfEOF == -1 || indexofSOM >= indexOfEOF)
             {
-                //TO DO ERROR
-                returnMessage = "Error -1 Message does not contain EOM marker";
+                returnMessage = ErrorHandler.GenerateMessage(-1, "Message does not contain EOM marker");
             }
             else if (indexofSOM == -1)
             {
-                //TO DO ERROR
-                returnMessage = "Error -1 DRC Directive not in first message segment";
+                returnMessage = ErrorHandler.GenerateMessage(-1, "DRC Directive not in first message segment");
             }
             else
             {
@@ -38,15 +36,13 @@ namespace ThortonService
                 String[] splitString = tempString.Split(new char[] { '|' }, 3);
                 if (splitString[0].Trim() != HL7SpecialChars.inMessageStart)
                 {
-                    //TO DO ERROR
-                    returnMessage = "Error -1 DRC Directive not in first message segment";
+                    returnMessage = ErrorHandler.GenerateMessage(-1, "DRC Directive not in first message segment");
                 }
                 else
                 {
                     if (splitString[1].Trim() != "EXEC-SERVICE")
                     {
-                        //TO DO ERROR
-                        returnMessage = "Error -1 SOA Command splitString[1] - UNKNOWN";
+                        returnMessage = ErrorHandler.GenerateMessage(-1, "SOA Command splitString[1] - UNKNOWN");
                     }
                     else
                     {
@@ -55,8 +51,7 @@ namespace ThortonService
                         ServiceInterface service = ServiceManager.getService(box[2]);
                         if(service == null)
                         {
-                            //TO DO ERROR
-                            returnMessage = "Error Service Not Found";
+                            returnMessage = ErrorHandler.GenerateMessage(-1, "Error Service Not Found");
                         }
 
                         else
