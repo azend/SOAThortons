@@ -88,7 +88,11 @@ namespace ThortonService
             catch (Exception e)
             {
                 Logger.Log("Top-level error has occurred.");
-                Logger.Log(e.ToString());
+                string stackTrace = e.ToString();
+                foreach (string line in stackTrace.Split('\n'))
+                {
+                    Logger.Log(line);
+                }
             }
         
         }
