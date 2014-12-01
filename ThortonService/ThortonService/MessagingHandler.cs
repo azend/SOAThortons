@@ -9,7 +9,7 @@ namespace ThortonService
 {
     class MessagingHandler
     {
-        String originalMessage;
+        
         public MessagingHandler()
         {
 

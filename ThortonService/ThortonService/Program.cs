@@ -25,13 +25,13 @@ namespace ThortonService
                 Logger.Log("Reading configuration file...");
                 SortedList<String, String> rawConfigs = ConfigHandler.readConfigFile();
                 Logger.Log("Finished reading in configuration file.");
-                Boolean badConfig = false;
 
 
 
 
 
 
+                /*
 
                 IPAddress serviceIP = IPAddress.Parse("127.0.0.1");
                 Int32 servicePort = 2500;
@@ -54,7 +54,8 @@ namespace ThortonService
                 RegistryMessageBuilder.registerTeam();
 
                 Logger.Log("Got back team ID from registry " + RegistryMessageBuilder.teamID);
-
+                */
+                String registryReturn = String.Empty;
                 ServiceData[] myService = ServiceManager.getServiceData();
 
                 Logger.Log("Publishing services to registry");
@@ -69,10 +70,10 @@ namespace ThortonService
                     Int32 teamID;
                     if (Int32.TryParse(a[2], out teamID))
                     {
-                        RegistryMessageBuilder.teamID = teamID;
+                        Configs.teamID = teamID;
 
                         Logger.Log("Creating HL7 server and binding to socket");
-                        IO.HL7Server test = new IO.HL7Server(servicePort, serviceIP);
+                        IO.HL7Server test = new IO.HL7Server(Configs.servicePort, Configs.serviceIP);
 
                         Logger.Log("Listening for clients...");
                         test.ListenForClients();
