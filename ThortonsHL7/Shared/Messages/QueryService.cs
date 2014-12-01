@@ -25,7 +25,7 @@ namespace Shared.Messages
 
          public static string GenerateMessage(string teamName, string teamID, string tagName)
         {
-            return String.Format(BOM + "DRC|QUERY_SERVICE|{0}|{1}|" + EOS + "SRV|{3}||||||" + EOS + EOM + EOS, teamName, teamID, tagName);
+            return String.Format(BOM + "DRC|QUERY_SERVICE|{0}|{1}|" + EOS + "SRV|{2}||||||" + EOS + EOM + EOS, teamName, teamID, tagName);
         }
 
         public static bool ParseMessage(string message)
@@ -98,62 +98,62 @@ namespace Shared.Messages
             return success;
         }
 
-        public string GetServerName()
+        public static string GetServerName()
         {
             return serverName;
         }
 
-        public string GetNumArgs()
+        public static string GetNumArgs()
         {
             return numArgs;
         }
 
-        public string[] GetArgPositions()
+        public static string[] GetArgPositions()
         {
             return argPosition;
         }
 
-        public string[] GetArgName()
+        public static string[] GetArgName()
         {
             return argName;
         }
 
-        public string[] GetArgDataType()
+        public static string[] GetArgDataType()
         {
             return argDataType;
         }
 
-        public string[] GetRspPositions()
+        public static string[] GetRspPositions()
         {
             return rspPosition;
         }
 
-        public string[] GetRspName()
+        public static string[] GetRspName()
         {
             return rspName;
         }
 
-        public string[] GetRspDataType()
+        public static string[] GetRspDataType()
         {
             return rspDataType;
         }
 
-        public string GetServerIP()
+        public static string GetServerIP()
         {
             return serverIP;
         }
 
-        public string GetPort()
+        public static string GetPort()
         {
             return port;
         }
 
-        public int GetErrorCode()
+        public static int GetErrorCode()
         {
             return errorCode;
         }
 
-        public string GetErrorMessage()
+        public static string GetErrorMessage()
         {
             return errorMessage;
         }
