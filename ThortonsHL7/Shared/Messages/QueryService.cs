@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Messages
 {
-    class QueryService: IMessage
+    public class QueryService: IMessage
     {
         private static bool success = false;
         private static string serverName;
@@ -23,9 +23,9 @@ namespace Shared.Messages
         private static string[] rspName;
         private static string[] rspDataType;
 
-         public static string GenerateMessage(string teamName, string teamID, string tagName)
+        public static string GenerateMessage(string teamName, string teamID, string tagName)
         {
-            return String.Format(BOM + "DRC|QUERY_SERVICE|{0}|{1}|" + EOS + "SRV|{2}||||||" + EOS + EOM + EOS, teamName, teamID, tagName);
+            return String.Format("bDRC|QUERY_SERVICE|{0}|{1}|dSRV|{2}||||||d1cd", teamName, teamID, tagName);
         }
 
         public static bool ParseMessage(string message)

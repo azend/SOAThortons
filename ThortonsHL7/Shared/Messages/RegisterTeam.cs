@@ -17,7 +17,7 @@ namespace Shared.Messages
 
         public static string GenerateMessage(string teamName)
         {
-            return String.Format(BOM + "DRC|REG-TEAM|||" + EOS + "INF|{0}|" + EOS + EOM + EOS, teamName);
+            return String.Format("bDRC|REG-TEAM|||dINF|{0}|d1cd", teamName);
         }
 
         public static bool ParseMessage(string message)
@@ -33,7 +33,6 @@ namespace Shared.Messages
             }
             else if (fail.Success)
             {
-                success = false;
                 errorCode = Convert.ToInt32(fail.Groups[1].Value);
                 errorMessage = fail.Groups[2].Value;
             }

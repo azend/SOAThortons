@@ -15,7 +15,7 @@ namespace Shared.Messages
 
         public static string GenerateMessage(string teamName, int teamID)
         {
-            return String.Format(BOM + "DRC|UNREG-TEAM|{0}|{1}|" + EOS + EOM + EOS, teamName, teamID);
+            return String.Format("bDRC|UNREG-TEAM|{0}|{1}|d1cd", teamName, teamID);
         }
 
         public static bool ParseMessage(string message)
@@ -25,6 +25,7 @@ namespace Shared.Messages
 
             if (pass.Success)
             {
+                success = true;
                 // Do nothing client was successfully un-registered
             }
             else if (fail.Success)
