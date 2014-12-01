@@ -33,7 +33,6 @@ namespace Shared.Messages
             }
             else if (fail.Success)
             {
-                success = false;
                 errorCode = Convert.ToInt32(fail.Groups[1].Value);
                 errorMessage = fail.Groups[2].Value;
             }

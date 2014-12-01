@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Shared;
+using Shared.Messages;
 
 namespace ThortonsHL7
 {
@@ -31,17 +33,34 @@ namespace ThortonsHL7
             {
                 float purchaseSubtotal = float.Parse(textBoxPurchaseSubtotal.Text);
                 string province = (string)comboBoxProvince.SelectedValue;
-
-                // Async task or something
                 MessageBox.Show("Sending purchase subtotal to be totalled by purchase totaller");
-                this.Close();
-                // parse data and send to result screen
-                // new PurchaseTotallerResults(float subTotal, float PST, float GST, float HST, float total).Show();
-                new PurchaseTotallerResults().Show();
+
+                // Placeholder code
+                // string executeString = ExecuteService.GenerateMessage("freelancer", RegisterTeam.GetTeamID(), "GIORP-TOTALLER", "2", "?", "?", "?", "?");
+                //Logger.Log("Sending query service message: " + executeString);
+                // Still need to set up sockets properly
+                // string response = SocketClient.ExecuteService();
+                // Logger.Log("Recieved response: " + response);
+                bool executeResponse = false;
+                try
+                {
+                    // executeResponse = ExecuteService.ParseMessage(response);
+                }
+                catch { }
+
+                if (!executeResponse)
+                {
+                    MessageBox.Show("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
+                    Logger.Log("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
+                }
+                else
+                {
+                    this.Close();
+                    // parse data and send to result screen
+                    // new PurchaseTotallerResults(float subTotal, float PST, float GST, float HST, float total).Show();
+                    new PurchaseTotallerResults().Show();
+                }
             }
-
-
-            
         }
 
         private bool ValidateData()

@@ -25,6 +25,7 @@ namespace Shared.Messages
 
             if (pass.Success)
             {
+                success = true;
                 // Do nothing client was successfully un-registered
             }
             else if (fail.Success)

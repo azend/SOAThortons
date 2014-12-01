@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Messages
 {
-    class ExecuteService : IMessage
+    public class ExecuteService : IMessage
     {
         private static bool success = false;
         private static string errorMessage;
@@ -52,6 +52,7 @@ namespace Shared.Messages
 
                     x++;
                 }
+                success = true;
             }
             else if (fail.Success)
             {
