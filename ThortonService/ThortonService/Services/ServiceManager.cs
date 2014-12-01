@@ -32,7 +32,6 @@ namespace ThortonService.Services
                 args.Add(item.getData());
             }
 
-            //TODO I AM WORKING HERE RIGHT NOW!!!!!
             return args.ToArray();
 
         }
@@ -47,7 +46,6 @@ namespace ThortonService.Services
                 args.Add(item.getArgs());
             }*/
 
-            //TODO I AM WORKING HERE RIGHT NOW!!!!!
             return args.ToArray();
         }
 
