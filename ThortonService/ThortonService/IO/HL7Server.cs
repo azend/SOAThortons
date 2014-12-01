@@ -28,7 +28,7 @@ namespace ThortonService.IO
             //TODO potential for error, assumes there is an IPAddress available
             this.port = portNumber;
         }
-        private void ListenForClients()
+        public void ListenForClients()
         {
             TcpListener tcpListener;
             tcpListener = new TcpListener(this.ipAddress, this.port);

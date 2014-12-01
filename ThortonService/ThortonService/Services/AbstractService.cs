@@ -20,6 +20,8 @@ namespace ThortonService.Services
 
         public abstract ServiceResponses[] getResp();
 
+        public abstract ServiceData getData();
+
       /*  protected StateObject state = null;
         protected List<string> parameters = new List<string>();
         protected Regex searchRegex = null;
