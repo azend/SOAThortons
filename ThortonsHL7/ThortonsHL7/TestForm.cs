@@ -34,7 +34,9 @@ namespace ThortonsHL7
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Test Passed: " + UnregisterTeam.ParseMessage(""));
+            bool result = Comms.UnregisterTeam("Freelancer", 1189);
+
+            MessageBox.Show(String.Format("Result: {0}\n", result));
         }
 
         private void button3_Click(object sender, EventArgs e)
