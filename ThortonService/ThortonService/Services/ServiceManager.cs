@@ -20,20 +20,6 @@ namespace ThortonService.Services
             currentNamespace = current.DeclaringType.Namespace;
         }
 
-        public static ServiceData[] getServiceData()
-        {
-            List<ServiceData> args = new List<ServiceData>();
-            ServiceInterface item;
-            foreach (String service in serviceList)
-            {
-                item = (AbstractService)Activator.CreateInstance(Type.GetType(service));
-                args.Add(item.);
-            }*/
-
-            //TODO I AM WORKING HERE RIGHT NOW!!!!!
-            return args.ToArray();
-
-        }
         public static ServiceArgument[] getArguments()
         {
             List<ServiceArgument> args = new List<ServiceArgument>();

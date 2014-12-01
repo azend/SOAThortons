@@ -56,7 +56,8 @@ namespace ThortonService.Services
         public const char BOM = '\xB';
         public const char EOS = '\xD';
         public const char EOM = '\x1C';
-        public ServiceData getData()
+
+        public ServiceData getServData()
         {
             ServiceData myServiceData = new ServiceData();
             myServiceData.arguments = getArgs();
