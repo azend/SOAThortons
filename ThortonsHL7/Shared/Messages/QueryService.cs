@@ -32,12 +32,13 @@ namespace Shared.Messages
         {
             int x = 0;
             int y = 0;
+            int numResponses = 0;
 
             Match pass = Regex.Match(message, "SOA[|]OK[|][|][|](.*)[|]");
             Match fail = Regex.Match(message, "SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
-            Match srv = Regex.Match(message, "SRV[|](.*)[|](.*)[|][|](.*)[|](.*)[|](.*)[|]");
-            MatchCollection args = Regex.Matches(message, "ARG[|](.*)[|](.*)[|](.*)[|](.*)[|]");
-            MatchCollection rsps = Regex.Matches(message, "RSP[|](.*)[|](.*)[|](.*)[|][|]");
+            Match srv = Regex.Match(message, "SRV[|](.*?)[|](.*?)[|][|](.*?)[|](.*?)[|](.*?)[|]");
+            MatchCollection args = Regex.Matches(message, "ARG[|](.*?)[|](.*?)[|](.*?)[|](.*?)[|]");
+            MatchCollection rsps = Regex.Matches(message, "RSP[|](.*?)[|](.*?)[|](.*?)[|][|]");
             Match msh = Regex.Match(message, "MCH[|](.*)[|](.*)|");
 
             if (pass.Success)
@@ -46,10 +47,15 @@ namespace Shared.Messages
 
                 serverName = srv.Groups[2].Value;
                 numArgs = srv.Groups[3].Value;
+                numResponses = Convert.ToInt32(srv.Groups[4].Value);
 
                 argPosition = new string[Convert.ToInt32(numArgs)];
                 argName = new string[Convert.ToInt32(numArgs)];
                 argDataType = new string[Convert.ToInt32(numArgs)];
+                rspPosition = new string[numResponses];
+                rspName = new string[numResponses];
+                rspDataType = new string[numResponses];
+
 
                foreach(Match arg in args)
                {
@@ -77,7 +83,6 @@ namespace Shared.Messages
                 
                 if(msh.Success)
                 {
-                    success = false;
                     serverIP = msh.Groups[1].Value;
                     port = msh.Groups[2].Value;
                 }
@@ -88,6 +93,7 @@ namespace Shared.Messages
             }
             else if(fail.Success)
             {
+                success = false;
                 errorCode = Convert.ToInt32(fail.Groups[1].Value);
                 errorMessage = fail.Groups[2].Value;
             }
