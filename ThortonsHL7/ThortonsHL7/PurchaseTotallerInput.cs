@@ -28,38 +28,21 @@ namespace ThortonsHL7
 
         private void Execute()
         {
-
             if (ValidateData())
             {
                 float purchaseSubtotal = float.Parse(textBoxPurchaseSubtotal.Text);
                 string province = (string)comboBoxProvince.SelectedValue;
                 MessageBox.Show("Sending purchase subtotal to be totalled by purchase totaller");
-
-                // Placeholder code
-                // string executeString = ExecuteService.GenerateMessage("freelancer", RegisterTeam.GetTeamID(), "GIORP-TOTALLER", "2", "?", "?", "?", "?");
+                Dictionary<string, string> serviceInfo = Comms.ExecuteService();
+                this.Close();
+                new PurchaseTotallerResults().Show();
                 //Logger.Log("Sending query service message: " + executeString);
-                // Still need to set up sockets properly
-                // string response = SocketClient.ExecuteService();
                 // Logger.Log("Recieved response: " + response);
-                bool executeResponse = false;
-                try
-                {
-                    // executeResponse = ExecuteService.ParseMessage(response);
-                }
-                catch { }
-
-                if (!executeResponse)
-                {
-                    MessageBox.Show("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
-                    Logger.Log("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
-                }
-                else
-                {
-                    this.Close();
-                    // parse data and send to result screen
-                    // new PurchaseTotallerResults(float subTotal, float PST, float GST, float HST, float total).Show();
-                    new PurchaseTotallerResults().Show();
-                }
+                //if (!executeResponse)
+                //{
+                //    MessageBox.Show("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
+                //    Logger.Log("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
+                //}
             }
         }
 

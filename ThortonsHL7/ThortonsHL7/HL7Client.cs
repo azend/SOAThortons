@@ -26,7 +26,7 @@ namespace ThortonsHL7
                 endpoint = new IPEndPoint(ipAddress, 11000);
                  * */
 
-                IPAddress ipAddress = new IPAddress(new byte[] { 192, 168, 0, 120 });
+                IPAddress ipAddress = new IPAddress(new byte[] { 127, 0, 0, 1 });
                 endpoint = new IPEndPoint(ipAddress, 3128);
 
                 // Create a TCP/IP  socket.
@@ -39,7 +39,32 @@ namespace ThortonsHL7
                 endpoint = null;
                 sock = null;
             }
-            
+        }
+
+        public HL7Client(IPAddress ip, int port)
+        {
+            try
+            {
+                // Establish the remote endpoint for the socket.
+                // This example uses port 11000 on the local computer.
+                /*
+                IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+                IPAddress ipAddress = ipHostInfo.AddressList[0];
+                endpoint = new IPEndPoint(ipAddress, 11000);
+                 * */
+
+                endpoint = new IPEndPoint(ip, port);
+
+                // Create a TCP/IP  socket.
+                sock = new Socket(AddressFamily.InterNetwork,
+                    SocketType.Stream, ProtocolType.Tcp);
+            }
+            catch (Exception e)
+            {
+                //TODO: Do something here to notify the client
+                endpoint = null;
+                sock = null;
+            }
         }
 
         public void Send(string message)
@@ -81,8 +106,6 @@ namespace ThortonsHL7
                     // Receive the response from the remote device.
                     int bytesRec = sock.Receive(bytes);
                     response = Encoding.ASCII.GetString(bytes, 0, bytesRec);
-
-                
                 }
 
             }

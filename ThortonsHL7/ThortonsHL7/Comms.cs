@@ -5,13 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Sockets;
+using System.Text.RegularExpressions;
 
 namespace ThortonsHL7
 {
     public class Comms
     {
+        private static Dictionary<string, string> teamInfo;
+
         private static Dictionary<string, string> registerTeam(HL7Client client, string teamName) {
-            Dictionary<string, string> teamInfo = null;
+            //Dictionary<string, string> teamInfo = null;
 
             string request = Shared.Messages.RegisterTeam.GenerateMessage(teamName);
             Logger.LogMessage("Sending register team request", request);
@@ -58,7 +63,7 @@ namespace ThortonsHL7
             Dictionary<string, string> serviceInfo = new Dictionary<string, string>();
 
             client.Send(Shared.Messages.QueryService.GenerateMessage(teamName, teamID, tagName));
-            Shared.Messages.QueryService.ParseMessage(client.Recieve());
+            bool buffer = Shared.Messages.QueryService.ParseMessage(client.Recieve());
 
             serviceInfo["Name"] = Shared.Messages.QueryService.GetServerName();
             serviceInfo["IPAddress"] = Shared.Messages.QueryService.GetServerIP();
@@ -99,29 +104,37 @@ namespace ThortonsHL7
             HL7Client client = new HL7Client();
             client.Connect();
 
-            Dictionary<string, string> newTeamInfo = registerTeam(client, teamInfo["Name"]);
+            //Dictionary<string, string> newTeamInfo = registerTeam(client, teamInfo["Name"]);
 
-            serviceInfo = queryService(client, newTeamInfo["Name"], newTeamInfo["ID"], "GIORP-TOTAL");
+            //serviceInfo = queryService(client, newTeamInfo["Name"], newTeamInfo["ID"], "GIORP-TOTAL");
 
-
+            serviceInfo = queryService(client, teamInfo["Name"], teamInfo["ID"], "GIORP-TOTAL");
 
             client.Disconnect();
 
             return serviceInfo;
         }
 
-        /*
+        
         private static Dictionary<string, string> executeService(HL7Client client, string teamName, string teamID, string serviceName, string numArgs, string[] argPosition, string[] argName, string[] argDataType, string[] argValue)
         {
             Dictionary<string, string> serviceInfo = new Dictionary<string, string>();
 
             client.Send(Shared.Messages.ExecuteService.GenerateMessage(teamName, teamID, serviceName, numArgs, argPosition, argName, argDataType, argValue));
-            Shared.Messages.QueryService.ParseMessage(client.Recieve());
+            Shared.Messages.ExecuteService.ParseMessage(client.Recieve());
 
-            serviceInfo["RSPPosition"] = Shared.Messages.ExecuteService.GetRSPPositions();
-            serviceInfo["RSPName"] = Shared.Messages.ExecuteService.GetRSPName();
-            serviceInfo["RSPDataType"] = Shared.Messages.ExecuteService.GetRSPDataType();
-            serviceInfo["RSPValue"] = Shared.Messages.ExecuteService.GetRSPValue();
+            for (int x = 0; x < Convert.ToInt32(Shared.Messages.QueryService.GetNumArgs()); x++ )
+            {
+                serviceInfo.Add("RSPPosition", Shared.Messages.ExecuteService.GetRSPPosition()[x]);
+                serviceInfo.Add("RSPName", Shared.Messages.ExecuteService.GetRSPName()[x]);
+                serviceInfo.Add("RSPDataType", Shared.Messages.ExecuteService.GetRSPDataType()[x]);
+                serviceInfo.Add("RSPValue", Shared.Messages.ExecuteService.GetRSPValue()[x]);
+            }
+
+            //serviceInfo["RSPPosition"] = Shared.Messages.ExecuteService.GetRSPPosition();
+            //serviceInfo["RSPName"] = Shared.Messages.ExecuteService.GetRSPName();
+            //serviceInfo["RSPDataType"] = Shared.Messages.ExecuteService.GetRSPDataType();
+            //serviceInfo["RSPValue"] = Shared.Messages.ExecuteService.GetRSPValue();
 
             return serviceInfo;
         }
@@ -129,15 +142,28 @@ namespace ThortonsHL7
         {
             Dictionary<string, string> serviceInfo = null;
 
-            HL7Client client = new HL7Client();
+            string ipBuf = Shared.Messages.QueryService.GetServerIP();
+            IPAddress ipAddress;
+            Match pass = Regex.Match(ipBuf, "(.*?)[.](.*?)[.](.*?)[.](.*?)");
+            bool test = IPAddress.TryParse(ipBuf, out ipAddress);
+            
+            HL7Client client = new HL7Client(ipAddress, Convert.ToInt32(Shared.Messages.QueryService.GetPort()));
             client.Connect();
 
-            serviceInfo = executeService(client, teamInfo["Name"], teamInfo["ID"], "GIORP-TOTAL");
+            // Need to figure out where to get argPosition, etc.
+            int numArgs = 2;
+            string[] argPosition = Shared.Messages.QueryService.GetArgPositions();
+            string[] argName = Shared.Messages.QueryService.GetArgName();
+            string[] argDataType = Shared.Messages.QueryService.GetArgDataType();
+            string[] argValue = new string[numArgs];
+            argValue[0] = "10";
+            argValue[1] = "ON";
+            serviceInfo = executeService(client, teamInfo["Name"], teamInfo["ID"], "GIORP-TOTAL", numArgs.ToString(), argPosition, argName, argDataType, argValue);
 
             client.Disconnect();
 
             return serviceInfo;
         }
-         * */
+        
     }
 }

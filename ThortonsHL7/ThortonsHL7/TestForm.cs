@@ -62,6 +62,8 @@ namespace ThortonsHL7
 
         private void button4_Click(object sender, EventArgs e)
         {
+            Dictionary<string, string> serviceInfo = Comms.ExecuteService();
+
             /*
             MessageBox.Show("Testing Response: PUB|OK|||5|RSP|1|PST|string|0>|RSP|2|HST|string|13|RSP|3|GST|string|0|RSP|4|SubTotalAmount|string|100|RSP|5|TotalPurchaseAmount|string|113| \nReturn: " + ExecuteService.ParseMessage("PUB|OK|||5|RSP|1|PST|string|0>|RSP|2|HST|string|13|RSP|3|GST|string|0|RSP|4|SubTotalAmount|string|100|RSP|5|TotalPurchaseAmount|string|113|"));
             MessageBox.Show("Testing Response: PUB|NOT-OK|-4|No team '<teamName>' (ID : <teamID>) found registered in Dbase|| \nReturn: " + ExecuteService.ParseMessage("PUB|NOT-OK|-4|No team '<teamName>' (ID : <teamID>) found registered in Dbase||"));  
