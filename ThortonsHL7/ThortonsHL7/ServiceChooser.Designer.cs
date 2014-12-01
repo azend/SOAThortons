@@ -83,6 +83,7 @@
             this.textBoxTeamName.Name = "textBoxTeamName";
             this.textBoxTeamName.Size = new System.Drawing.Size(111, 20);
             this.textBoxTeamName.TabIndex = 4;
+            this.textBoxTeamName.Text = "Freelancer";
             // 
             // buttonUnregisterTeam
             // 

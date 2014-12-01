@@ -119,16 +119,22 @@ namespace ThortonsHL7
         private static Dictionary<string, string> executeService(HL7Client client, string teamName, string teamID, string serviceName, string numArgs, string[] argPosition, string[] argName, string[] argDataType, string[] argValue)
         {
             Dictionary<string, string> serviceInfo = new Dictionary<string, string>();
-
             client.Send(Shared.Messages.ExecuteService.GenerateMessage(teamName, teamID, serviceName, numArgs, argPosition, argName, argDataType, argValue));
-            Shared.Messages.ExecuteService.ParseMessage(client.Recieve());
+            bool success = Shared.Messages.ExecuteService.ParseMessage(client.Recieve());
 
-            for (int x = 0; x < Convert.ToInt32(Shared.Messages.QueryService.GetNumArgs()); x++ )
+            if (success)
             {
-                serviceInfo.Add("RSPPosition", Shared.Messages.ExecuteService.GetRSPPosition()[x]);
-                serviceInfo.Add("RSPName", Shared.Messages.ExecuteService.GetRSPName()[x]);
-                serviceInfo.Add("RSPDataType", Shared.Messages.ExecuteService.GetRSPDataType()[x]);
-                serviceInfo.Add("RSPValue", Shared.Messages.ExecuteService.GetRSPValue()[x]);
+                for (int x = 0; x < Convert.ToInt32(Shared.Messages.QueryService.GetNumArgs()); x++)
+                {
+                    serviceInfo.Add("RSPPosition", Shared.Messages.ExecuteService.GetRSPPosition()[x]);
+                    serviceInfo.Add("RSPName", Shared.Messages.ExecuteService.GetRSPName()[x]);
+                    serviceInfo.Add("RSPDataType", Shared.Messages.ExecuteService.GetRSPDataType()[x]);
+                    serviceInfo.Add("RSPValue", Shared.Messages.ExecuteService.GetRSPValue()[x]);
+                }
+            }
+            else
+            {
+                // Report error
             }
 
             //serviceInfo["RSPPosition"] = Shared.Messages.ExecuteService.GetRSPPosition();

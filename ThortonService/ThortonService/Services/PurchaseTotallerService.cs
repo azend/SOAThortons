@@ -116,7 +116,7 @@ namespace ThortonService.Services
 
         public override string serviceName
         {
-            get { return "PurchaseTotallerService"; }
+            get { return "GIORP-TOTAL"; }
         }
 
         public override string Process(string command)
@@ -144,7 +144,7 @@ namespace ThortonService.Services
             //Regex argumentRegex = new Regex("ARG[|](\\d)[|](.*)[|](.*)[|][|](.*)[|][" + EOS + "]");
            // Match m = searchRegex.Match(command);
 
-            Regex argumentRegex = new Regex("ARG[|](\\d)[|](.*)[|](.*)[|][|](.*)[|]");
+            Regex argumentRegex = new Regex("ARG[|](.*)[|](.*)[|](.*)[|][|](.*)[|]");
             if (m != null)
             {
                 string teamName = m.Groups[1].Value;
@@ -163,7 +163,7 @@ namespace ThortonService.Services
                     //Match mArg = argumentRegex.Match(cArg.Value);
                     
                     
-                    if (mArg != null)
+                    if (mArg.Success)
                     {
                         int argPosition = -1;
                         Int32.TryParse(mArg.Groups[1].Value, out argPosition);
@@ -183,28 +183,34 @@ namespace ThortonService.Services
                     }
 
                 }
-
-                // Actually do the service
-                if (args.Count == 2)
+                try
                 {
-                    ServiceArgument subtotalArg = args.Where(arg => arg.Name == "Subtotal" && arg.DataType == "double").SingleOrDefault();
-                    ServiceArgument regionArg = args.Where(arg => arg.Name == "Region" && arg.DataType == "string").SingleOrDefault();
-
-                    double subtotal = Convert.ToDouble(subtotalArg.Value);
-                    string regionCode = regionArg.Value;
-
-                    Region region = Regions.GetRegionByCode(regionCode);
-
-                    Logger.Log("---");
-                    Logger.Log(string.Format("Found region based on code: {0}", region.Name));
-
-                    if (region != null)
+                    // Actually do the service
+                    if (args.Count == 2)
                     {
-                        double total = subtotal + ((region.GSTRate / 100) * subtotal) + ((region.HSTRate / 100) * subtotal) + ((region.PSTRate / 100) * subtotal);
-                        total = Math.Round(total, 2);
-                        response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Subtotal|double|{0}|" + EOS + "RSP|2|GST|double|{1}|" + EOS + "RSP|3|HST|double|{2}|" + EOS + "RSP|4|PST|double|{3}|" + EOS + "RSP|5|Total|double|{4}|" + EOS + EOM + EOS, subtotal, region.GSTRate, region.HSTRate, region.PSTRate, total);
-                    }
+                        ServiceArgument subtotalArg = args.Where(arg => arg.Name == "Subtotal" && arg.DataType == "double").SingleOrDefault();
+                        ServiceArgument regionArg = args.Where(arg => arg.Name == "Region" && arg.DataType == "string").SingleOrDefault();
 
+                        double subtotal = Convert.ToDouble(subtotalArg.Value);
+                        string regionCode = regionArg.Value;
+
+                        Region region = Regions.GetRegionByCode(regionCode);
+
+                        Logger.Log("---");
+                        Logger.Log(string.Format("Found region based on code: {0}", region.Name));
+
+                        if (region != null)
+                        {
+                            double total = subtotal + ((region.GSTRate / 100) * subtotal) + ((region.HSTRate / 100) * subtotal) + ((region.PSTRate / 100) * subtotal);
+                            total = Math.Round(total, 2);
+                            response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Subtotal|double|{0}|" + EOS + "RSP|2|GST|double|{1}|" + EOS + "RSP|3|HST|double|{2}|" + EOS + "RSP|4|PST|double|{3}|" + EOS + "RSP|5|Total|double|{4}|" + EOS + EOM + EOS, subtotal, region.GSTRate, region.HSTRate, region.PSTRate, total);
+                        }
+
+                    }
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
 
             }

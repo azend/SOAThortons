@@ -34,12 +34,12 @@ namespace Shared.Messages
             int y = 0;
             int numResponses = 0;
 
-            Match pass = Regex.Match(message, "SOA[|]OK[|][|][|](.*)[|]");
-            Match fail = Regex.Match(message, "SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
+            Match pass = Regex.Match(message, "SOA[|]OK[|][|][|](.*?)[|]");
+            Match fail = Regex.Match(message, "SOA[|]NOT-OK[|](.*?)[|](.*?)[|][|]");
             Match srv = Regex.Match(message, "SRV[|](.*?)[|](.*?)[|][|](.*?)[|](.*?)[|](.*?)[|]");
             MatchCollection args = Regex.Matches(message, "ARG[|](.*?)[|](.*?)[|](.*?)[|](.*?)[|]");
             MatchCollection rsps = Regex.Matches(message, "RSP[|](.*?)[|](.*?)[|](.*?)[|][|]");
-            Match msh = Regex.Match(message, "MCH[|](.*)[|](.*)|");
+            Match msh = Regex.Match(message, "MCH[|](.*?)[|](.*?)[|]");
 
             if (pass.Success)
             {
