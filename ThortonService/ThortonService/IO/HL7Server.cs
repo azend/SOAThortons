@@ -53,6 +53,8 @@ namespace ThortonService.IO
         {
             TcpClient tcpClient = (TcpClient)client;
 
+            Logger.Log("Client connected to server");
+
             byte[] readBuffer = new byte[1024];
             int bytesRead = 0;
             StringBuilder completeMessage = new StringBuilder();
@@ -76,12 +78,12 @@ namespace ThortonService.IO
                 }
                 catch
                 {
-                    Console.WriteLine("SocketError");
-                    //a socket error has occured
+                    Logger.Log("Client had socket error");
                 }
 
                 if(tcpClient.Connected) //If the tcpClient is still open
                 {
+                    Logger.Log("Writing response to client");
                     byte[] writeBuffer;
                     writeBuffer = Encoding.ASCII.GetBytes(returnMessage);
                     clientStream.Write(writeBuffer, 0, writeBuffer.Length);
@@ -96,7 +98,9 @@ namespace ThortonService.IO
 
             if(tcpClient.Connected)
             {
+                Logger.Log("Closing connection to client");
                 tcpClient.Close();
+
             } 
         }
     }
