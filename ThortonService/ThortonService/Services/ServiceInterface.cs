@@ -15,5 +15,7 @@ namespace ThortonService.Services
         ServiceArgument[] getArgs();
 
         ServiceResponses[] getResp();
+
+        ServiceData getData();
     }
 }

@@ -21,7 +21,7 @@ namespace ThortonService.Services
             serviceList.Add(currentNamespace + ".PurchaseTotallerService");
         }
 
-<<<<<<< HEAD
+
         public static ServiceData[] getServiceData()
         {
             List<ServiceData> args = new List<ServiceData>();
@@ -36,8 +36,7 @@ namespace ThortonService.Services
             return args.ToArray();
 
         }
-=======
->>>>>>> origin/master
+
         public static ServiceArgument[] getArguments()
         {
             List<ServiceArgument> args = new List<ServiceArgument>();

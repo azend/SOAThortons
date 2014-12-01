@@ -38,27 +38,23 @@ namespace ThortonService
             String response = reg.SendMessage(message);
             return response;
         }
-        public static String publishService(String tagName, String serviceName,Int32 securityLevel, String description, ServiceArgument[] arguments, ServiceResponses[] responses)
+        public static String publishService(ServiceData data)
         {
             StringBuilder message = new StringBuilder();
             message.AppendFormat("{0}DRC|PUB-SERVICE|{1}|{2}|{3}", HL7SpecialChars.BOM, teamName, teamID, HL7SpecialChars.EOS);
-            message.AppendFormat("SRV|{0}|{1}|{2}|{3}|{4}|{5}|{6}", tagName, serviceName, securityLevel, arguments.Count(), responses.Count(),description, HL7SpecialChars.EOS);
-            
-            for(int i = 0; i<arguments.Count(); i++)
+            message.AppendFormat("SRV|{0}|{1}|{2}|{3}|{4}|{5}|{6}", data.tagName, data.serviceName, data.securityLevel, data.arguments.Count(), data.responses.Count(), data.description, HL7SpecialChars.EOS);
+
+            for (int i = 0; i < data.arguments.Count(); i++)
             {
-<<<<<<< HEAD
+
                 message.AppendFormat("{0}{1}", data.arguments[i].getArgument(i+1), HL7SpecialChars.EOS);
-=======
-                message.AppendFormat("{0}{1}", arguments[i].getArgument(i), HL7SpecialChars.EOS);
->>>>>>> origin/master
+
             }
-            for(int i = 0; i<responses.Count(); i++)
+            for (int i = 0; i < data.responses.Count(); i++)
             {
-<<<<<<< HEAD
+
                 message.AppendFormat("{0}{1}", data.responses[i].getArgument(i+1), HL7SpecialChars.EOS);
-=======
-                message.AppendFormat("{0}{1}", responses[i].getArgument(i), HL7SpecialChars.EOS);
->>>>>>> origin/master
+
             }
             message.AppendFormat("MCH|{0}|{1}|{2}{3}{2}", registryIP, registryPort, HL7SpecialChars.EOS, HL7SpecialChars.EOM, HL7SpecialChars.EOS);
 
