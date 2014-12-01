@@ -23,9 +23,9 @@ namespace Shared.Messages
 
             for (int x = 0; x < Convert.ToInt32(numArgs); x++ )
             {
-                args += String.Format("ARG|{0}|{1}|{2}||{3}" + EOS, argPosition[x], argName[x], argDataType[x], argValue[x]);
+                args += String.Format("ARG|{0}|{1}|{2}||{3}d", argPosition[x], argName[x], argDataType[x], argValue[x]);
             }
-            return String.Format(BOM + "DRC|EXEC_SERVICE|{0}|{1}|" + EOS + "SRV||{2}||{3}|||" + EOS + "{4}" + EOM + EOS, teamName, teamID, serviceName, numArgs, args);
+            return String.Format("bDRC|EXEC_SERVICE|{0}|{1}|dSRV||{2}||{3}|||d{4}1cd", teamName, teamID, serviceName, numArgs, args);
         }
 
         public static bool ParseMessage(string message)
