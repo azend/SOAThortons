@@ -25,7 +25,7 @@ namespace Shared.Messages
 
         public static string GenerateMessage(string teamName, string teamID, string tagName)
         {
-            return String.Format(BOM + "DRC|QUERY_SERVICE|{0}|{1}|" + EOS + "SRV|{2}||||||" + EOS + EOM + EOS, teamName, teamID, tagName);
+            return String.Format(BOM + "DRC|QUERY-SERVICE|{0}|{1}|" + EOS + "SRV|{2}||||||" + EOS + EOM + EOS, teamName, teamID, tagName);
         }
 
         public static bool ParseMessage(string message)
