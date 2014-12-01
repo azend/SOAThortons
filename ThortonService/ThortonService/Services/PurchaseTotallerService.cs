@@ -203,7 +203,7 @@ namespace ThortonService.Services
                     {
                         double total = subtotal + ((region.GSTRate / 100) * subtotal) + ((region.HSTRate / 100) * subtotal) + ((region.PSTRate / 100) * subtotal);
                         total = Math.Round(total, 2);
-                        response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Total|double|{0}|" + EOS + EOM + EOS, total);
+                        response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Subtotal|double|{0}|" + EOS + "RSP|2|GST|double|{1}|" + EOS + "RSP|3|HST|double|{2}|" + EOS + "RSP|4|PST|double|{3}|" + EOS + "RSP|5|Total|double|{4}|" + EOS + EOM + EOS, subtotal, region.GSTRate, region.HSTRate, region.PSTRate, total);
                     }
 
                 }
