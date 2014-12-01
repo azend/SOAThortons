@@ -37,6 +37,8 @@ namespace ThortonService
             RegistryMessageBuilder.teamID = 0;
 
             RegistryMessageBuilder.registerTeam();
+
+
             ServiceData[] myService = ServiceManager.getServiceData();
             foreach(ServiceData data in myService)
             {

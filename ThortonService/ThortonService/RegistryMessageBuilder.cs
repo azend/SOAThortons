@@ -11,10 +11,10 @@ namespace ThortonService
 {
     class RegistryMessageBuilder
     {
-        public static String teamName = "default";
+        public static String teamName = String.Empty;
         public static Int32 teamID = 0;
-        public static IPAddress registryIP;
-        public static Int32 registryPort;
+        public static IPAddress registryIP = null;
+        public static Int32 registryPort = 0;
 
         public static String registerTeam()
         {
