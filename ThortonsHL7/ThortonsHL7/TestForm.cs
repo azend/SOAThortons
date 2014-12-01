@@ -14,6 +14,8 @@ namespace ThortonsHL7
 {
     public partial class TestForm : Form
     {
+
+        private Dictionary<string, string> teamInfo = null;
         public TestForm()
         {
             InitializeComponent();
@@ -30,13 +32,21 @@ namespace ThortonsHL7
 
             Dictionary<string, string> teamInfo = Comms.RegisterTeam();
             MessageBox.Show(String.Format("Name: {0}\nID: {1}\nExpiry: {2}", teamInfo["Name"], teamInfo["ID"], teamInfo["Expiry"]));
+
+            this.teamInfo = teamInfo;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            bool result = Comms.UnregisterTeam("Freelancer", 1189);
+            if (teamInfo != null)
+            {
+                int teamID = -1;
+                Int32.TryParse(teamInfo["ID"], out teamID);
+                bool result = Comms.UnregisterTeam(teamInfo["Name"], teamID);
 
-            MessageBox.Show(String.Format("Result: {0}\n", result));
+                MessageBox.Show(String.Format("Result: {0}\n", result));
+            }
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
