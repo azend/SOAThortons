@@ -25,16 +25,16 @@ namespace Shared.Messages
             {
                 args += String.Format("ARG|{0}|{1}|{2}||{3}" + EOS, argPosition[x], argName[x], argDataType[x], argValue[x]);
             }
-            return String.Format(BOM + "DRC|EXEC_SERVICE|{0}|{1}|" + EOS + "SRV||{2}||{3}|||" + EOS + "{4}" + EOM + EOS , teamName, teamID, serviceName, numArgs, args);
+            return String.Format(BOM + "DRC|EXEC-SERVICE|{0}|{1}|" + EOS + "SRV||{2}||{3}|||" + EOS + "{4}" + EOM + EOS , teamName, teamID, serviceName, numArgs, args);
         }
 
         public static bool ParseMessage(string message)
         {
             int x = 0;
 
-            Match pass = Regex.Match(message, "SOA[|]OK[|](.*)[|](.*)[|][|]");
-            Match fail = Regex.Match(message, "SOA[|]NOT-OK[|](.*)[|](.*)[|][|]");
-            MatchCollection rsps = Regex.Matches(message, "RSP|(.*)|(.*)|(.*)|(.*)|");
+            Match pass = Regex.Match(message, "PUB[|]OK[|][|][|](.*)[|]");
+            Match fail = Regex.Match(message, "PUB[|]NOT-OK[|](.*?)[|](.*?)[|]");
+            MatchCollection rsps = Regex.Matches(message, "RSP[|](.*?)[|](.*?)[|](.*?)[|](.*?)[|]");
 
             if (pass.Success)
             {
@@ -56,6 +56,7 @@ namespace Shared.Messages
             }
             else if (fail.Success)
             {
+                success = false;
                 errorCode = Convert.ToInt32(fail.Groups[1].Value);
                 errorMessage = fail.Groups[2].Value;
             }
