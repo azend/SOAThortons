@@ -87,5 +87,35 @@ namespace ThortonsHL7
 
             return serviceInfo;
         }
+
+        /*
+        private static Dictionary<string, string> executeService(HL7Client client, string teamName, string teamID, string serviceName, string numArgs, string[] argPosition, string[] argName, string[] argDataType, string[] argValue)
+        {
+            Dictionary<string, string> serviceInfo = new Dictionary<string, string>();
+
+            client.Send(Shared.Messages.ExecuteService.GenerateMessage(teamName, teamID, serviceName, numArgs, argPosition, argName, argDataType, argValue));
+            Shared.Messages.QueryService.ParseMessage(client.Recieve());
+
+            serviceInfo["RSPPosition"] = Shared.Messages.ExecuteService.GetRSPPositions();
+            serviceInfo["RSPName"] = Shared.Messages.ExecuteService.GetRSPName();
+            serviceInfo["RSPDataType"] = Shared.Messages.ExecuteService.GetRSPDataType();
+            serviceInfo["RSPValue"] = Shared.Messages.ExecuteService.GetRSPValue();
+
+            return serviceInfo;
+        }
+        public static Dictionary<string, string> ExecuteService()
+        {
+            Dictionary<string, string> serviceInfo = null;
+
+            HL7Client client = new HL7Client();
+            client.Connect();
+
+            serviceInfo = executeService(client, teamInfo["Name"], teamInfo["ID"], "GIORP-TOTAL");
+
+            client.Disconnect();
+
+            return serviceInfo;
+        }
+         * */
     }
 }
