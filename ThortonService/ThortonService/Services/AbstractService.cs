@@ -19,6 +19,7 @@ namespace ThortonService.Services
         public abstract ServiceArgument[] getArgs();
 
         public abstract ServiceResponses[] getResp();
+        public abstract ServiceData getData();
 
       /*  protected StateObject state = null;
         protected List<string> parameters = new List<string>();
