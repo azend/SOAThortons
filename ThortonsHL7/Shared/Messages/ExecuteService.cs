@@ -32,7 +32,7 @@ namespace Shared.Messages
         {
             int x = 0;
 
-            Match pass = Regex.Match(message, "PUB[|]OK[|][|][|](.*)[|]");
+            Match pass = Regex.Match(message, "PUB[|]OK[|][|][|](.*?)[|]");
             Match fail = Regex.Match(message, "PUB[|]NOT-OK[|](.*?)[|](.*?)[|]");
             MatchCollection rsps = Regex.Matches(message, "RSP[|](.*?)[|](.*?)[|](.*?)[|](.*?)[|]");
 

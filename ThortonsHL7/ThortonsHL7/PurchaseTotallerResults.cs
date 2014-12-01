@@ -12,12 +12,13 @@ namespace ThortonsHL7
 {
     public partial class PurchaseTotallerResults : Form
     {
-        public PurchaseTotallerResults()
+        public PurchaseTotallerResults(Dictionary<string, string> serviceInfo)
         {
             InitializeComponent();
+            
         }
 
-        public PurchaseTotallerResults(float subTotal, float PST, float GST, float HST, float total)
+        public void DisplayResults(float subTotal, float PST, float GST, float HST, float total)
         {
             InitializeComponent();
             
