@@ -12,12 +12,24 @@ namespace ThortonsHL7
         private static Dictionary<string, string> registerTeam(HL7Client client) {
             Dictionary<string, string> teamInfo = new Dictionary<string, string>();
 
-            client.Send(RegisterTeam.GenerateMessage("Freelancer"));
-            RegisterTeam.ParseMessage(client.Recieve());
+            client.Send(Shared.Messages.RegisterTeam.GenerateMessage("Freelancer"));
+            Shared.Messages.RegisterTeam.ParseMessage(client.Recieve());
 
             teamInfo.Add("Name", "Freelancer");
-            teamInfo.Add("ID", RegisterTeam.GetTeamID());
-            teamInfo.Add("Expiry", RegisterTeam.GetExpiry());
+            teamInfo.Add("ID", Shared.Messages.RegisterTeam.GetTeamID());
+            teamInfo.Add("Expiry", Shared.Messages.RegisterTeam.GetExpiry());
+
+            return teamInfo;
+        }
+
+        public static Dictionary<string, string> RegisterTeam()
+        {
+            HL7Client client = new HL7Client();
+            client.Connect();
+
+            Dictionary<string, string> teamInfo = registerTeam(client);
+
+            client.Disconnect();
 
             return teamInfo;
         }

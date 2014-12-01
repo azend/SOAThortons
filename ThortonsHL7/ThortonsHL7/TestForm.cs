@@ -21,10 +21,15 @@ namespace ThortonsHL7
 
         private void button1_Click(object sender, EventArgs e)
         {
+            /*
             RegisterTeam.ParseMessage("SOA|OK|1180|18:00:05||");
             MessageBox.Show("Testing Response: SOA|OK|1180|18:00:05|| \nReturn: " + RegisterTeam.ParseMessage("SOA|OK|1180|18:00:05||") + "\nTeamID: " + RegisterTeam.GetTeamID() + "\nExpiry " + RegisterTeam.GetExpiry());
             MessageBox.Show("Testing Response: SOA|NOT-OK|-1|Message doesn't contain EOM marker|| \nReturn: " + RegisterTeam.ParseMessage("SOA|NOT-OK|-1|Message doesn't contain EOM marker||")); 
             MessageBox.Show("Testing Response(Should throw exception): SOA|OK||18:00:05|| \nTest Passed: " + RegisterTeam.ParseMessage("SOA|OK||18:00:05||") + "\nTeamID: " + RegisterTeam.GetTeamID() + "\nExpiry " + RegisterTeam.GetExpiry());
+            */
+
+            Dictionary<string, string> teamInfo = Comms.RegisterTeam();
+            MessageBox.Show(String.Format("Name: {0}\nID: {1}\nExpiry: {2}", teamInfo["Name"], teamInfo["ID"], teamInfo["Expiry"]));
         }
 
         private void button2_Click(object sender, EventArgs e)

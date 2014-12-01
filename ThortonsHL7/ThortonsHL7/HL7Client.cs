@@ -20,9 +20,14 @@ namespace ThortonsHL7
             {
                 // Establish the remote endpoint for the socket.
                 // This example uses port 11000 on the local computer.
+                /*
                 IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
                 IPAddress ipAddress = ipHostInfo.AddressList[0];
                 endpoint = new IPEndPoint(ipAddress, 11000);
+                 * */
+
+                IPAddress ipAddress = new IPAddress(new byte[] { 192, 168, 0, 120 });
+                endpoint = new IPEndPoint(ipAddress, 3128);
 
                 // Create a TCP/IP  socket.
                 sock = new Socket(AddressFamily.InterNetwork,
