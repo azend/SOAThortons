@@ -20,7 +20,6 @@ namespace ThortonsHL7
         {
             InitializeComponent();
 
-            //Dictionary<string, string> teamInfo = Comms.GetServices();
 
         }
 
@@ -54,25 +53,20 @@ namespace ThortonsHL7
         {
             // Attempt to register team (needs testing)
             teamName = textBoxTeamName.Text;
-            string registerTeamStr = RegisterTeam.GenerateMessage(teamName);
-            Logger.Log("Sending team register message: " + registerTeamStr);
-            string response = SocketClient.RegisterTeam(registerTeamStr);
-            Logger.Log("Recieved response: " + response);
-            bool registerResponse = false;
-            try {
-                registerResponse = RegisterTeam.ParseMessage(response);
-            } catch { }
 
-            // Check response for OK/FAIL
-            if (!registerResponse)
-            {
-                MessageBox.Show("Error registering team: [" + RegisterTeam.GetErrorCode() + "] " + RegisterTeam.GetErrorMessage());
-                Logger.Log("Error registering team: [" + RegisterTeam.GetErrorCode() + "] " + RegisterTeam.GetErrorMessage());
-            }
-            else
+            //Dictionary<string, string> teamInfo = Comms.RegisterTeam(teamName);
+            Dictionary<string, string> teamInfo = null;
+
+            if (teamInfo != null)
             {
                 buttonPurchaseTotaller.Enabled = true;
             }
+            else
+            {
+                MessageBox.Show("Your team name could not be registered.");
+            }
+            
+
         }
 
         private void buttonExit_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using Shared.Messages;
+﻿using Shared;
+using Shared.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,13 @@ namespace ThortonsHL7
         private static Dictionary<string, string> registerTeam(HL7Client client, string teamName) {
             Dictionary<string, string> teamInfo = new Dictionary<string, string>();
 
-            client.Send(Shared.Messages.RegisterTeam.GenerateMessage(teamName));
-            Shared.Messages.RegisterTeam.ParseMessage(client.Recieve());
+            string request = Shared.Messages.RegisterTeam.GenerateMessage(teamName);
+            Logger.LogMessage("Sending register team request", request);
+            client.Send(request);
+
+            string response = client.Recieve();
+            Logger.LogMessage("Recieving register team response", response);
+            Shared.Messages.RegisterTeam.ParseMessage(response);
 
             teamInfo.Add("Name", teamName);
             teamInfo.Add("ID", Shared.Messages.RegisterTeam.GetTeamID());
@@ -26,8 +32,13 @@ namespace ThortonsHL7
         {
             Dictionary<string, string> teamInfo = new Dictionary<string, string>();
 
-            client.Send(Shared.Messages.UnregisterTeam.GenerateMessage(teamName, teamId));
-            bool success = Shared.Messages.UnregisterTeam.ParseMessage(client.Recieve());
+            string request = Shared.Messages.UnregisterTeam.GenerateMessage(teamName, teamId);
+            Logger.LogMessage("Sending unregister team request", request);
+            client.Send(request);
+
+            string response = client.Recieve();
+            Logger.LogMessage("Recieving unregister team response", response);
+            bool success = Shared.Messages.UnregisterTeam.ParseMessage(response);
 
             return success;
         }
@@ -70,16 +81,16 @@ namespace ThortonsHL7
             return success;
         }
 
-        public static Dictionary<string, string> QueryService()
+        public static Dictionary<string, string> QueryService(Dictionary<string, string> teamInfo)
         {
             Dictionary<string, string> serviceInfo = null;
 
             HL7Client client = new HL7Client();
             client.Connect();
 
-            Dictionary<string, string> teamInfo = registerTeam(client);
+            Dictionary<string, string> newTeamInfo = registerTeam(client, teamInfo["Name"]);
 
-            serviceInfo = queryService(client, teamInfo["Name"], teamInfo["ID"], "GIORP-TOTAL");
+            serviceInfo = queryService(client, newTeamInfo["Name"], newTeamInfo["ID"], "GIORP-TOTAL");
 
 
 

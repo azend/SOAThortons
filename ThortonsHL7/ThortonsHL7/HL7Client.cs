@@ -42,13 +42,30 @@ namespace ThortonsHL7
             
         }
 
-        public void Send(string message) {
-            if (sock != null && sock.Connected) {
-                // Encode the data string into a byte array.
-                byte[] msg = Encoding.ASCII.GetBytes(message);
+        public void Send(string message)
+        {
+            try
+            {
+                if (sock != null && sock.Connected) {
+                    // Encode the data string into a byte array.
+                    byte[] msg = Encoding.ASCII.GetBytes(message);
 
-                // Send the data through the socket.
-                int bytesSent = sock.Send(msg);
+                    // Send the data through the socket.
+                    int bytesSent = sock.Send(msg);
+                }
+
+            }
+            catch (ArgumentNullException ane)
+            {
+                Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+            }
+            catch (SocketException se)
+            {
+                Console.WriteLine("SocketException : {0}", se.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unexpected exception : {0}", e.ToString());
             }
         }
 
@@ -56,13 +73,30 @@ namespace ThortonsHL7
         {
             string response = null;
 
-            if (sock != null && sock.Connected)
+            try
             {
-                // Receive the response from the remote device.
-                int bytesRec = sock.Receive(bytes);
-                response = Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                
+                if (sock != null && sock.Connected)
+                {
+                    // Receive the response from the remote device.
+                    int bytesRec = sock.Receive(bytes);
+                    response = Encoding.ASCII.GetString(bytes, 0, bytesRec);
 
                 
+                }
+
+            }
+            catch (ArgumentNullException ane)
+            {
+                Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+            }
+            catch (SocketException se)
+            {
+                Console.WriteLine("SocketException : {0}", se.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unexpected exception : {0}", e.ToString());
             }
 
             return response;
@@ -71,12 +105,30 @@ namespace ThortonsHL7
 
         public void Disconnect()
         {
-            if (sock != null && sock.Connected)
+            try
             {
-                // Release the socket.
-                sock.Shutdown(SocketShutdown.Both);
-                sock.Close();
-                sock = null;
+
+                if (sock != null && sock.Connected)
+                {
+                    // Release the socket.
+                    sock.Shutdown(SocketShutdown.Both);
+                    sock.Close();
+                    sock = null;
+                }
+
+
+            }
+            catch (ArgumentNullException ane)
+            {
+                Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+            }
+            catch (SocketException se)
+            {
+                Console.WriteLine("SocketException : {0}", se.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unexpected exception : {0}", e.ToString());
             }
         }
 

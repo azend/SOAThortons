@@ -30,7 +30,7 @@ namespace ThortonsHL7
             MessageBox.Show("Testing Response(Should throw exception): SOA|OK||18:00:05|| \nTest Passed: " + RegisterTeam.ParseMessage("SOA|OK||18:00:05||") + "\nTeamID: " + RegisterTeam.GetTeamID() + "\nExpiry " + RegisterTeam.GetExpiry());
             */
 
-            Dictionary<string, string> teamInfo = Comms.RegisterTeam();
+            Dictionary<string, string> teamInfo = Comms.RegisterTeam("Freelancer");
             MessageBox.Show(String.Format("Name: {0}\nID: {1}\nExpiry: {2}", teamInfo["Name"], teamInfo["ID"], teamInfo["Expiry"]));
 
             this.teamInfo = teamInfo;
@@ -51,9 +51,13 @@ namespace ThortonsHL7
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Dictionary<string, string> serviceInfo = Comms.QueryService();
+            if (teamInfo != null)
+            {
+                Dictionary<string, string> serviceInfo = Comms.QueryService(teamInfo);
 
-            MessageBox.Show(String.Format("Name: {0}\nIP Address: {1}\nPort: {2}\n", serviceInfo["Name"], serviceInfo["IPAddress"], serviceInfo["Port"]));
+                MessageBox.Show(String.Format("Name: {0}\nIP Address: {1}\nPort: {2}\n", serviceInfo["Name"], serviceInfo["IPAddress"], serviceInfo["Port"]));
+            }
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
