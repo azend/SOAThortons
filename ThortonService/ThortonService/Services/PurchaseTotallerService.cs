@@ -127,7 +127,7 @@ namespace ThortonService.Services
             Logger.LogMessage("Receiving purchase totaller service request", command);
 
             String[] list = command.Split(new char[] { EOS });
-            Boolean getOutOfHere = false;
+           // Boolean getOutOfHere = false;
             String stringToRegex = list[0] + EOS + list[1];
             Regex mySearchRegex = new Regex("[" + BOM + "]DRC[|]EXEC-SERVICE[|](.*)[|](.*)[|][" + EOS + "]SRV[|][|](.*)[|][|](\\d+)[|][|][|]");
 
