@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * FILE        : ReisterTeam.cs
+ * PROJECT     : Service Oriented Architecture - Assignment #1 (Thorton's SOA)
+ * AUTHORS     : Jim Raithby, Verdi R-D, Richard Meijer, Mathew Cain 
+ * SUBMIT DATE : 11/30/2014
+ * DESCRIPTION : Class to handle messages for registering and data.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,9 +34,18 @@ namespace Shared.Messages
           
             if (pass.Success)
             {
-                success = true;
-                teamID = pass.Groups[1].Value;
-                expiry = pass.Groups[2].Value;
+                try
+                {
+                    success = true;
+                    teamID = pass.Groups[1].Value;
+                    expiry = pass.Groups[2].Value;
+                }
+                catch (Exception e)
+                {
+                    success = false;
+                    Logger.LogMessage("(RegisterTeam:ParseMessage) " + "Error parsing message: ", e.ToString());
+                    return success;
+                }
             }
             else if (fail.Success)
             {

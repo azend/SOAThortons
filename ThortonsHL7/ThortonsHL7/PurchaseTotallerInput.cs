@@ -1,4 +1,10 @@
-﻿using Shared;
+﻿/*
+ * FILE        : PurchaseTotallerInput.cs
+ * PROJECT     : Service Oriented Architecture - Assignment #1 (Thorton's SOA)
+ * AUTHORS     : Jim Raithby, Verdi R-D, Richard Meijer, Mathew Cain 
+ * SUBMIT DATE : 11/30/2014
+ * DESCRIPTION : A windows form that allows a user to enter the subtotal amount, and province to send to the GIORP purchase totaller service.
+ */
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,17 +38,19 @@ namespace ThortonsHL7
             {
                 float purchaseSubtotal = float.Parse(textBoxPurchaseSubtotal.Text);
                 string province = (string)comboBoxProvince.SelectedValue;
-                MessageBox.Show("Sending purchase subtotal to be totalled by purchase totaller");
-                Dictionary<string, string> serviceInfo = Comms.ExecuteService();
+
+                try
+                {
+                    Dictionary<string, string> serviceInfo = Comms.ExecuteService(purchaseSubtotal, province);
+                }
+                catch
+                {
+                    MessageBox.Show("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
+                    Logger.LogMessage("(PurchaseTotallerInput:Execute) Error executing service: {" + ExecuteService.GetErrorCode() + "} ", ExecuteService.GetErrorMessage());
+                }
+
                 this.Close();
                 new PurchaseTotallerResults().Show();
-                //Logger.Log("Sending query service message: " + executeString);
-                // Logger.Log("Recieved response: " + response);
-                //if (!executeResponse)
-                //{
-                //    MessageBox.Show("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
-                //    Logger.Log("Error executing service: [" + ExecuteService.GetErrorCode() + "] " + ExecuteService.GetErrorMessage());
-                //}
             }
         }
 
@@ -58,12 +66,14 @@ namespace ThortonsHL7
             {
                 valid = false;
                 MessageBox.Show("Invalid purchase subtotal");
+                Logger.LogMessage("(PurchaseTotallerInput:ValidateData) Error parsing subtotal: ", e.ToString());
             }
 
             if (comboBoxProvince.SelectedValue == null)
             {
                 valid = false;
                 MessageBox.Show("Invalid province / territory");
+                Logger.LogMessage("(PurchaseTotallerInput:ValidateData) Invalid province/territory entered: ", comboBoxProvince.SelectedValue.ToString());
             }
 
             return valid;

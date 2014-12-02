@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * FILE        : UnregisterTeam.cs
+ * PROJECT     : Service Oriented Architecture - Assignment #1 (Thorton's SOA)
+ * AUTHORS     : Jim Raithby, Verdi R-D, Richard Meijer, Mathew Cain 
+ * SUBMIT DATE : 11/30/2014
+ * DESCRIPTION : Class to handle messages for unregistering and data.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

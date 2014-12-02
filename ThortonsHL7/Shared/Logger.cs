@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * FILE        : Logger.cs
+ * PROJECT     : Service Oriented Architecture - Assignment #1 (Thorton's SOA)
+ * AUTHORS     : Jim Raithby, Verdi R-D, Richard Meijer, Mathew Cain 
+ * SUBMIT DATE : 11/30/2014
+ * DESCRIPTION : Class to handle logging information.
+ */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

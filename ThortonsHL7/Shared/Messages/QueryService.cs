@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * FILE        : QueryService.cs
+ * PROJECT     : Service Oriented Architecture - Assignment #1 (Thorton's SOA)
+ * AUTHORS     : Jim Raithby, Verdi R-D, Richard Meijer, Mathew Cain 
+ * SUBMIT DATE : 11/30/2014
+ * DESCRIPTION : Class to handle query messages and data.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,9 +58,10 @@ namespace Shared.Messages
                     numArgs = srv.Groups[3].Value;
                     numResponses = Convert.ToInt32(srv.Groups[4].Value);
                 }
-                catch(Exception)
+                catch(Exception e)
                 {
                     success = false;
+                    Logger.LogMessage("(QueryService:ParseMessage) " + "Error parsing message: ", e.ToString());
                     return success;
                 }
 

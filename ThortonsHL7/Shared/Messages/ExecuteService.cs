@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * FILE        : ExecuteService.cs
+ * PROJECT     : Service Oriented Architecture - Assignment #1 (Thorton's SOA)
+ * AUTHORS     : Jim Raithby, Verdi R-D, Richard Meijer, Mathew Cain 
+ * SUBMIT DATE : 11/30/2014
+ * DESCRIPTION : Class to handle execute messages and data.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,9 +52,10 @@ namespace Shared.Messages
                     respDataType = new string[rsps.Count];
                     respValue = new string[rsps.Count];
                 }
-                catch(Exception)
+                catch(Exception e)
                 {
                     success = false;
+                    Logger.LogMessage("(ExecuteService:ParseMessage) " + "Error parsing message: ", e.ToString());
                     return success;
                 }
 

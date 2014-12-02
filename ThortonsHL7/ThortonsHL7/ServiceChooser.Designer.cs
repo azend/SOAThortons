@@ -65,7 +65,7 @@
             this.buttonRegisterTeam.TabIndex = 2;
             this.buttonRegisterTeam.Text = "Register Team";
             this.buttonRegisterTeam.UseVisualStyleBackColor = true;
-            this.buttonRegisterTeam.Click += new System.EventHandler(this.button1_Click);
+            this.buttonRegisterTeam.Click += new System.EventHandler(this.buttonRegisterTeam_Click);
             // 
             // buttonExit
             // 
