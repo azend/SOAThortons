@@ -30,6 +30,9 @@ namespace Shared.Messages
         private static string[] rspName;
         private static string[] rspDataType;
 
+        private static int numResponses = 0;
+        public static int getNumResponses { get { return numResponses; } }
+
         public static string GenerateMessage(string teamName, string teamID, string tagName)
         {
             return String.Format(BOM + "DRC|QUERY-SERVICE|{0}|{1}|" + EOS + "\x0aSRV|{2}||||||" + EOS + "\x0a" + EOM + EOS, teamName, teamID, tagName);
@@ -39,7 +42,7 @@ namespace Shared.Messages
         {
             int x = 0;
             int y = 0;
-            int numResponses = 0;
+            
 
             Match pass = Regex.Match(message, "SOA[|]OK[|][|][|](.*?)[|]");
             Match fail = Regex.Match(message, "SOA[|]NOT-OK[|](.*?)[|](.*?)[|][|]");

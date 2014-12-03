@@ -141,7 +141,7 @@ namespace ThortonsHL7
                     sock.Shutdown(SocketShutdown.Both);
                     sock.Close();
                     sock = null;
-                    Logger.LogMessage("(HL7Client:Disconnect) " + "Socket successfully disconnected", sock.ToString());
+                   // Logger.LogMessage("(HL7Client:Disconnect) " + "Socket successfully disconnected", sock.ToString());
                 }
             }
             catch (ArgumentNullException ane)

@@ -126,7 +126,7 @@ namespace ThortonsHL7
             client.Send(Shared.Messages.ExecuteService.GenerateMessage(teamName, teamID, serviceName, numArgs, argPosition, argName, argDataType, argValue));
             bool success = Shared.Messages.ExecuteService.ParseMessage(client.Recieve());
 
-            if (success)
+           /* if (success)
             {
                 for (int x = 0; x < Convert.ToInt32(Shared.Messages.QueryService.GetNumArgs()); x++)
                 {
@@ -139,7 +139,7 @@ namespace ThortonsHL7
             else
             {
                 Logger.LogMessage("(Comms:executeService) ParseMessage success: ", success.ToString());
-            }
+            }*/
 
             return serviceInfo;
         }

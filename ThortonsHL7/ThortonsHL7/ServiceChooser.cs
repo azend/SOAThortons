@@ -38,7 +38,7 @@ namespace ThortonsHL7
 
             if (teamInfo != null)
             {
-                MessageBox.Show(String.Format("Name: {0}\nID: {1}\nExpiry: {2}", teamInfo["Name"], teamInfo["ID"], teamInfo["Expiry"]));
+               // MessageBox.Show(String.Format("Name: {0}\nID: {1}\nExpiry: {2}", teamInfo["Name"], teamInfo["ID"], teamInfo["Expiry"]));
                 buttonPurchaseTotaller.Enabled = true;
             }
             else
@@ -65,8 +65,14 @@ namespace ThortonsHL7
             {
                 Dictionary<string, string> serviceInfo = Comms.QueryService(teamInfo);
 
-                MessageBox.Show(String.Format("Name: {0}\nIP Address: {1}\nPort: {2}\n", serviceInfo["Name"], serviceInfo["IPAddress"], serviceInfo["Port"]));
-                new PurchaseTotallerInput().Show();
+               // MessageBox.Show(String.Format("Name: {0}\nIP Address: {1}\nPort: {2}\n", serviceInfo["Name"], serviceInfo["IPAddress"], serviceInfo["Port"]));
+                this.Hide();
+                new PurchaseTotallerInput().ShowDialog();
+                
+                new PurchaseTotallerResults().ShowDialog();
+                this.Show();
+                this.TopMost = true;
+                this.Focus();
             }
         }
 

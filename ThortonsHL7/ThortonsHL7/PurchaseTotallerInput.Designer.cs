@@ -107,6 +107,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxPurchaseSubtotal);
@@ -115,7 +116,10 @@
             this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonExecute);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "PurchaseTotallerInput";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "PurchaseTotallerInput";
             this.ResumeLayout(false);
             this.PerformLayout();

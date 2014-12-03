@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ThortonService.Services
@@ -167,9 +169,15 @@ namespace ThortonService.Services
                     {
                         int argPosition = -1;
                         Int32.TryParse(mArg.Groups[1].Value, out argPosition);
-                        string argName = mArg.Groups[2].Value;
-                        string argDataType = mArg.Groups[3].Value;
-                        string argValue = mArg.Groups[4].Value;
+                        CultureInfo cultureInfo   =Thread.CurrentThread.CurrentCulture;
+                        TextInfo textInfo = cultureInfo.TextInfo;
+
+                        string tempName = textInfo.ToLower(mArg.Groups[2].Value);
+
+
+                        string argName = textInfo.ToTitleCase(tempName);
+                        string argDataType = textInfo.ToLower(mArg.Groups[3].Value);
+                        string argValue = textInfo.ToUpper(mArg.Groups[4].Value);
 
                         ServiceArgument arg = new ServiceArgument()
                         {

@@ -37,7 +37,7 @@ namespace ThortonsHL7
             if (ValidateData())
             {
                 float purchaseSubtotal = float.Parse(textBoxPurchaseSubtotal.Text);
-                string province = (string)comboBoxProvince.SelectedValue;
+                string province = getCode(comboBoxProvince.SelectedValue.ToString());
 
                 try
                 {
@@ -50,9 +50,44 @@ namespace ThortonsHL7
                 }
 
                 this.Close();
-                new PurchaseTotallerResults().Show();
+               // new PurchaseTotallerResults().Show();
             }
         }
+
+
+        private String getCode(String province)
+        {
+            String response = string.Empty;
+            switch (province)
+            {
+
+
+                case "Newfoundland": response = "NL"; break;
+                case "Nova Scotia": response = "NS"; break;
+                case "New Brunswick": response = "NB"; break;
+                case "Prince Edward Island": response = "PE"; break;
+                case "Quebec": response = "QC"; break;
+                case "Ontario": response = "ON"; break;
+                case "Manitoba": response = "MB"; break;
+                case "Saskatchewan": response = "SK"; break;
+                case "Alberta": response = "AB"; break;
+                case "British Colombia": response = "BC"; break;
+                case "Yukon Territories": response = "YT"; break;
+                case "Northwest Territories": response = "NT"; break;
+                case "Nunavut": response = "NU"; break;
+
+            }
+
+            return response;
+        }
+            
+
+
+
+
+
+
+
 
         private bool ValidateData()
         {
@@ -73,7 +108,7 @@ namespace ThortonsHL7
             {
                 valid = false;
                 MessageBox.Show("Invalid province / territory");
-                Logger.LogMessage("(PurchaseTotallerInput:ValidateData) Invalid province/territory entered: ", comboBoxProvince.SelectedValue.ToString());
+                Logger.LogMessage("(PurchaseTotallerInput:ValidateData) Invalid province/territory entered: ", String.Empty);
             }
 
             return valid;

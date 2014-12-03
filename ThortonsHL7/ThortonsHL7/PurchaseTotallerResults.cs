@@ -26,9 +26,9 @@ namespace ThortonsHL7
 
             try
             {
-                string[] buffer = new string[Convert.ToInt32(Shared.Messages.QueryService.GetNumArgs())];
+                string[] buffer = new string[Convert.ToInt32(Shared.Messages.QueryService.getNumResponses)];
 
-                for (int x = 0; x < Convert.ToInt32(Shared.Messages.QueryService.GetNumArgs()); x++)
+                for (int x = 0; x < Convert.ToInt32(Shared.Messages.QueryService.getNumResponses); x++)
                 {
                     buffer[x] = Shared.Messages.ExecuteService.GetRSPValue()[x];
                 }
