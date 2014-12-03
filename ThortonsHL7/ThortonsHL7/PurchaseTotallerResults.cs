@@ -46,8 +46,8 @@ namespace ThortonsHL7
         {         
             // Display information
             subtotalTextbox.Text = results[0];
-            pstTextbox.Text = results[1];
-            gstTextbox.Text = results[2];
+            pstTextbox.Text = results[2];
+            gstTextbox.Text = results[1];
             hstTextbox.Text = results[3];
             totalTextbox.Text = results[4];
             Logger.LogMessage("(PurchaseTotallerResults:DisplayResults) Successfully displayed results. Total:", results[4]);

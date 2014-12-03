@@ -209,10 +209,28 @@ namespace ThortonService.Services
 
                         if (region != null)
                         {
-                            double total = subtotal + ((region.GSTRate / 100) * subtotal) + ((region.HSTRate / 100) * subtotal) + ((region.PSTRate / 100) * subtotal);
+                            double gst = ((region.GSTRate / 100) * subtotal);
+                            double pst = 0;
+                            if (region.Code == "PE" || region.Code == "QC")
+                            {
+                                pst = ((region.PSTRate / 100) * (subtotal + gst));
+                            }
+                            else
+                            {
+
+                                pst = ((region.PSTRate / 100) * subtotal);
+                            }
+                            double hst = ((region.HSTRate / 100) * subtotal);
+
+
+                            double total = subtotal + gst + pst + hst;
                             total = Math.Round(total, 2);
-                            response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Subtotal|double|{0}|" + EOS + "RSP|2|GST|double|{1}|" + EOS + "RSP|3|HST|double|{2}|" + EOS + "RSP|4|PST|double|{3}|" + EOS + "RSP|5|Total|double|{4}|" + EOS + EOM + EOS, subtotal, region.GSTRate, region.HSTRate, region.PSTRate, total);
+                            response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Subtotal|double|{0:0.00}|" + EOS + "RSP|2|GSTAmount|double|{1:0.00}|" + EOS + "RSP|3|PSTAmount|double|{2:0.00}|" + EOS + "RSP|4|HSTAmount|double|{3:0.00}|" + EOS + "RSP|5|Total|double|{4:0.00}|" + EOS + EOM + EOS, subtotal, gst, pst, hst, total);
                         }
+                   
+
+
+
 
                     }
                 }
