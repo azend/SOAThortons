@@ -68,8 +68,11 @@ namespace ThortonsHL7
                // MessageBox.Show(String.Format("Name: {0}\nIP Address: {1}\nPort: {2}\n", serviceInfo["Name"], serviceInfo["IPAddress"], serviceInfo["Port"]));
                 this.Hide();
                 new PurchaseTotallerInput().ShowDialog();
+                if(QueryService.GetSuccess())
+                {
+                    new PurchaseTotallerResults().ShowDialog();
+                }
                 
-                new PurchaseTotallerResults().ShowDialog();
                 this.Show();
                 this.TopMost = true;
                 this.Focus();

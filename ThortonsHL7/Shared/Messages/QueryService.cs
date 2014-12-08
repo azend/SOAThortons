@@ -182,5 +182,10 @@ namespace Shared.Messages
         {
             return errorMessage;
         }
+
+        public static Boolean GetSuccess()
+        {
+            return success;
+        }
     }
 }

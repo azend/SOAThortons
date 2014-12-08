@@ -161,8 +161,16 @@ namespace ThortonsHL7
                 string[] argName = Shared.Messages.QueryService.GetArgName();
                 string[] argDataType = Shared.Messages.QueryService.GetArgDataType();
                 string[] argValue = new string[numArgs];
-                argValue[0] = purchaseSubtotal.ToString();
-                argValue[1] = province;
+                if (argName[0].ToLower() == "region")
+                {
+                    argValue[1] = purchaseSubtotal.ToString();
+                    argValue[0] = province;
+                }
+                else
+                {
+                    argValue[0] = purchaseSubtotal.ToString();
+                    argValue[1] = province;
+                }
                 serviceInfo = executeService(client, teamInfo["Name"], teamInfo["ID"], "GIORP-TOTAL", numArgs.ToString(), argPosition, argName, argDataType, argValue);
 
                 client.Disconnect();
