@@ -4,10 +4,10 @@ teamName|Freelancer
 
 
 //Listener Config
-serviceIP|192.168.0.120
-servicePort|3000
+serviceIP|142.156.111.148
+servicePort|5128
 
 
 //SOA-Registry
-registryIP|192.168.0.120
+registryIP|142.156.111.144
 registryPort|3128

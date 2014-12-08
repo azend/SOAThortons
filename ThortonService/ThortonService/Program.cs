@@ -67,38 +67,45 @@ namespace ThortonService
 
 
                     String registryReturn = RegistryMessageBuilder.registerTeam();
-                    
-                    if (registryReturn.StartsWith(HL7SpecialChars.BOM + "SOA|OK"))
+                    if (String.IsNullOrWhiteSpace(registryReturn))
                     {
-                        String[] a = registryReturn.Split(new char[] { '|' });
-                        Int32 teamID;
-                        if (Int32.TryParse(a[2], out teamID))
+                        Logger.Log("Unable to communicate with server");
+
+                    }
+                    else
+                    {
+                        if (registryReturn.StartsWith(HL7SpecialChars.BOM + "SOA|OK"))
                         {
-                            Configs.teamID = teamID;
-                            Logger.Log("Got back team ID from registry " + Configs.teamID);
-                            Logger.Log("Creating HL7 server and binding to socket");
-                            IO.HL7Server test = new IO.HL7Server(Configs.servicePort, Configs.serviceIP);
-
-                            ServiceData[] myService = ServiceManager.getServiceData();
-
-                            Logger.Log("Publishing services to registry");
-                            foreach (ServiceData data in myService)
+                            String[] a = registryReturn.Split(new char[] { '|' });
+                            Int32 teamID;
+                            if (Int32.TryParse(a[2], out teamID))
                             {
-                                Logger.Log(string.Format("Publishing service {0} to registry", data.serviceName));
-                                registryReturn = RegistryMessageBuilder.publishService(data);
+                                Configs.teamID = teamID;
+                                Logger.Log("Got back team ID from registry " + Configs.teamID);
+                                Logger.Log("Creating HL7 server and binding to socket");
+                                IO.HL7Server test = new IO.HL7Server(Configs.servicePort, Configs.serviceIP);
+
+                                ServiceData[] myService = ServiceManager.getServiceData();
+
+                                Logger.Log("Publishing services to registry");
+                                foreach (ServiceData data in myService)
+                                {
+                                    Logger.Log(string.Format("Publishing service {0} to registry", data.serviceName));
+                                    registryReturn = RegistryMessageBuilder.publishService(data);
+                                }
+
+
+                                Logger.Log("Listening for clients...");
+                                test.ListenForClients();
                             }
 
 
-                            Logger.Log("Listening for clients...");
-                            test.ListenForClients();
+                            Logger.Log("An error was returned from the registry");
+                            Logger.Log(registryReturn);
                         }
 
-
-                        Logger.Log("An error was returned from the registry");
-                        Logger.Log(registryReturn);
+                        Logger.Log("Server is shutting down.");
                     }
-
-                    Logger.Log("Server is shutting down.");
                 }
             }
             catch (Exception e)
@@ -110,6 +117,8 @@ namespace ThortonService
                     Logger.Log(line);
                 }
             }
+            Logger.Log("Service Exiting");
+            Logger.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         
         }
     }

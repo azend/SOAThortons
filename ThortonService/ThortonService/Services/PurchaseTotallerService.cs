@@ -155,95 +155,102 @@ namespace ThortonService.Services
                 string numArgs = m.Groups[4].Value;
                 List<ServiceArgument> args = new List<ServiceArgument>();
 
-                //CaptureCollection mArgs = m.Groups[5].Captures;
-//                foreach (Capture cArg in mArgs)
-                
-                for (int i = 2; i < (list.Count()); i++ )
+                String teamCheck = RegistryMessageBuilder.queryTeam(teamName, Int32.Parse(teamId), serviceName);
+                String[] teamCheckResponse = teamCheck.Split('|');
+
+                if (teamCheckResponse.Length < 2 || teamCheckResponse[1] == "NOT-OK")
                 {
 
-                    Match mArg = argumentRegex.Match(list[i]);
-                    //Match mArg = argumentRegex.Match(cArg.Value);
-                    
-                    
-                    if (mArg.Success)
-                    {
-                        int argPosition = -1;
-                        Int32.TryParse(mArg.Groups[1].Value, out argPosition);
-                        CultureInfo cultureInfo   =Thread.CurrentThread.CurrentCulture;
-                        TextInfo textInfo = cultureInfo.TextInfo;
-
-                        string tempName = textInfo.ToLower(mArg.Groups[2].Value);
-
-
-                        string argName = textInfo.ToTitleCase(tempName);
-                        string argDataType = textInfo.ToLower(mArg.Groups[3].Value);
-                        string argValue = textInfo.ToUpper(mArg.Groups[4].Value);
-
-                        ServiceArgument arg = new ServiceArgument()
-                        {
-                            Name = argName,
-                            DataType = argDataType,
-                            Value = argValue
-                        };
-
-                        //args.Insert(argPosition, arg);
-                        args.Add(arg);
-                    }
+                    response = teamCheck;
+                    Logger.Log(String.Format("Invalid team {0}", teamCheck));
 
                 }
-                try
+                else
                 {
-                    // Actually do the service
-                    if (args.Count == 2)
+                    //CaptureCollection mArgs = m.Groups[5].Captures;
+                    //                foreach (Capture cArg in mArgs)
+
+                    for (int i = 2; i < (list.Count()); i++)
                     {
-                        ServiceArgument subtotalArg = args.Where(arg => arg.Name == "Subtotal" && arg.DataType == "double").SingleOrDefault();
-                        ServiceArgument regionArg = args.Where(arg => arg.Name == "Region" && arg.DataType == "string").SingleOrDefault();
 
-                        double subtotal = Convert.ToDouble(subtotalArg.Value);
-                        string regionCode = regionArg.Value;
+                        Match mArg = argumentRegex.Match(list[i]);
+                        //Match mArg = argumentRegex.Match(cArg.Value);
 
-                        Region region = Regions.GetRegionByCode(regionCode);
 
-                        Logger.Log("---");
-                        Logger.Log(string.Format("Found region based on code: {0}", region.Name));
-
-                        if (region != null)
+                        if (mArg.Success)
                         {
-                            double gst = ((region.GSTRate / 100) * subtotal);
-                            double pst = 0;
-                            if (region.Code == "PE" || region.Code == "QC")
+                            int argPosition = -1;
+                            Int32.TryParse(mArg.Groups[1].Value, out argPosition);
+                            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+                            TextInfo textInfo = cultureInfo.TextInfo;
+
+                            string tempName = textInfo.ToLower(mArg.Groups[2].Value);
+
+
+                            string argName = textInfo.ToTitleCase(tempName);
+                            string argDataType = textInfo.ToLower(mArg.Groups[3].Value);
+                            string argValue = textInfo.ToUpper(mArg.Groups[4].Value);
+
+                            ServiceArgument arg = new ServiceArgument()
                             {
-                                pst = ((region.PSTRate / 100) * (subtotal + gst));
-                            }
-                            else
-                            {
+                                Name = argName,
+                                DataType = argDataType,
+                                Value = argValue
+                            };
 
-                                pst = ((region.PSTRate / 100) * subtotal);
-                            }
-                            double hst = ((region.HSTRate / 100) * subtotal);
-
-
-                            double total = subtotal + gst + pst + hst;
-                            total = Math.Round(total, 2);
-                            response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Subtotal|double|{0:0.00}|" + EOS + "RSP|2|GSTAmount|double|{1:0.00}|" + EOS + "RSP|3|PSTAmount|double|{2:0.00}|" + EOS + "RSP|4|HSTAmount|double|{3:0.00}|" + EOS + "RSP|5|Total|double|{4:0.00}|" + EOS + EOM + EOS, subtotal, gst, pst, hst, total);
+                            //args.Insert(argPosition, arg);
+                            args.Add(arg);
                         }
-                   
-
-
-
 
                     }
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
+                    try
+                    {
+                        // Actually do the service
+                        if (args.Count == 2)
+                        {
+                            ServiceArgument subtotalArg = args.Where(arg => arg.Name == "Subtotal" && arg.DataType == "double").SingleOrDefault();
+                            ServiceArgument regionArg = args.Where(arg => arg.Name == "Region" && arg.DataType == "string").SingleOrDefault();
+
+                            double subtotal = Convert.ToDouble(subtotalArg.Value);
+                            string regionCode = regionArg.Value;
+
+                            Region region = Regions.GetRegionByCode(regionCode);
+
+                            Logger.Log("---");
+                            Logger.Log(string.Format("Found region based on code: {0}", region.Name));
+
+                            if (region != null)
+                            {
+                                double gst = ((region.GSTRate / 100) * subtotal);
+                                double pst = 0;
+                                if (region.Code == "PE" || region.Code == "QC")
+                                {
+                                    pst = ((region.PSTRate / 100) * (subtotal + gst));
+                                }
+                                else
+                                {
+
+                                    pst = ((region.PSTRate / 100) * subtotal);
+                                }
+                                double hst = ((region.HSTRate / 100) * subtotal);
+
+
+                                double total = subtotal + gst + pst + hst;
+                                total = Math.Round(total, 2);
+                                response = String.Format(BOM + "PUB|OK|||1|" + EOS + "RSP|1|Subtotal|double|{0:0.00}|" + EOS + "RSP|2|GSTAmount|double|{1:0.00}|" + EOS + "RSP|3|PSTAmount|double|{2:0.00}|" + EOS + "RSP|4|HSTAmount|double|{3:0.00}|" + EOS + "RSP|5|Total|double|{4:0.00}|" + EOS + EOM + EOS, subtotal, gst, pst, hst, total);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
                 }
 
+                // Log
+                Logger.LogMessage("Responded with purchase totaller service response", response);
             }
-
-            // Log
-            Logger.LogMessage("Responded with purchase totaller service response", response);
-
             return response;
         }
     }

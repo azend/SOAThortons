@@ -27,7 +27,7 @@ namespace ThortonsHL7
         {
             try
             {
-                IPAddress ipAddress = new IPAddress(new byte[] { 127, 0, 0, 1 });
+                IPAddress ipAddress = new IPAddress(new byte[] { 142, 156, 111, 144 });
                 endpoint = new IPEndPoint(ipAddress, 3128);
 
                 // Create a TCP/IP  socket.
